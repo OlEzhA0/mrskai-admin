@@ -56,7 +56,7 @@ export const UploadFile: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/clearPhotos`);
+    fetch(`http://localhost:5000/clearPhotos`);
   }, []);
 
   const setPreviewPhoto = (photo: string) => {

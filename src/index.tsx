@@ -12,13 +12,13 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <AppContextWrapper>
-      <HashRouter>
-        <React.StrictMode>
+    <HashRouter>
+      <React.StrictMode>
+        <AppContextWrapper>
           <App />
-        </React.StrictMode>
-      </HashRouter>
-    </AppContextWrapper>
+        </AppContextWrapper>
+      </React.StrictMode>
+    </HashRouter>
   </ApolloProvider>,
   document.getElementById("root")
 );

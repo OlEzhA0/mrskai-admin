@@ -1,4 +1,6 @@
-const URL = 'http://localhost5000'
+const URL = 'http://localhost:5000';
+
+
 export async function postData(formData: any) {
   const res = await fetch(`${URL}/upload`, {
     method: "POST",
@@ -13,7 +15,7 @@ export async function postData(formData: any) {
 }
 
 export const getPhotos = async () => {
-  const res = await fetch(`${URL}/takePhotos`);
+  const res = await fetch(`http://localhost:5000/takePhotos`);
   const json = await res.json();
 
   return json;
