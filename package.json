@@ -49,7 +49,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "nodemon server/app.js"
+    "dev": "nodemon server/app.js",
+    "heroku-postbuild": "echo Skip builds on Heroku"
   },
   "eslintConfig": {
     "extends": "react-app"
