@@ -43,7 +43,7 @@
     "node": "12.11.1"
   },
   "scripts": {
-    "start": "nodemon server/app.js",
+    "start": "serve -s build",
     "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
