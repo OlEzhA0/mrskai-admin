@@ -32,7 +32,7 @@ html {
 .wrapper {
   width: 1340px;
   position: absolute;
-  left: 50%;
+  left: calc(50% - 23px);
   transform: translateX(-50%);
 }
 
