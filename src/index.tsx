@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 import { AppContextWrapper } from "./appContext";
@@ -11,14 +11,14 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    {/* <HashRouter> */}
+  <BrowserRouter>
+    <ApolloProvider client={client}>
       <React.StrictMode>
         <AppContextWrapper>
           <App />
         </AppContextWrapper>
       </React.StrictMode>
-    {/* </HashRouter> */}
-  </ApolloProvider>,
+    </ApolloProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
