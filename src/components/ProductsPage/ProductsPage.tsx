@@ -1,7 +1,7 @@
 import React, { useMemo, useContext, useEffect } from "react";
 import "./ProductsPage.scss";
 import { ProductsPageSettings } from "../ProductsPageSettings";
-import { useQuery, useMutation, useSubscription } from "react-apollo";
+import { useMutation, useSubscription } from "react-apollo";
 import { productsQuery } from "./query";
 import { ProductCard } from "../ProductCard";
 import { LoadSpinner } from "../LoadSpinner";

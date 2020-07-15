@@ -5,7 +5,6 @@ import { useQuery, useMutation } from "react-apollo";
 import { productQuery } from "./query";
 import { EditingInput } from "../EditingInput";
 import { EditingContext } from "../../EditingContext";
-import { ProductsSelect } from "../ProductsSelect";
 import { EditingSelect } from "../EditingSelect";
 import { UploadFile } from "../UploadFile";
 import { EditingPrices } from "../EditingPrices";
@@ -25,7 +24,6 @@ export const EditingPage: React.FC = () => {
     validation,
     setFieldsParams,
     choosenSizes,
-    setSizes,
     setChoosenSizes,
   } = useContext(EditingContext);
 
@@ -101,7 +99,7 @@ export const EditingPage: React.FC = () => {
       const sizes = choosenSizes.join(",");
 
       if (isNewProduct) {
-        const res = await addProduct({
+        await addProduct({
           variables: {
             title: fieldsParams.title,
             descr: fieldsParams.descr,

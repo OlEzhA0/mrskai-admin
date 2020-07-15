@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import "./ProductCard.scss";
 import { AppContext } from "../../appContext";
-import { useMutation } from "react-apollo";
-import { addProductMutation } from "../../mutation";
-import { productsQuery } from "../ProductsPage/query";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 interface Props {

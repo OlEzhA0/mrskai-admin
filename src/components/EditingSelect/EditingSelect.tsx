@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./EditingSelect.scss";
 import cn from "classnames";
 import { typeOptions } from "../../helpers";
