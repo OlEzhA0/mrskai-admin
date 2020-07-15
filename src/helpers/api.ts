@@ -1,5 +1,6 @@
+const URL = 'http://localhost5000'
 export async function postData(formData: any) {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/upload`, {
+  const res = await fetch(`${URL}/upload`, {
     method: "POST",
     headers: {
       ContentType: "text/html; charset: utf-8",
@@ -12,7 +13,7 @@ export async function postData(formData: any) {
 }
 
 export const getPhotos = async () => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/takePhotos`);
+  const res = await fetch(`${URL}/takePhotos`);
   const json = await res.json();
 
   return json;

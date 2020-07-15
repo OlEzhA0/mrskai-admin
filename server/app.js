@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 mongoose.connect(
   process.env.DATABASE_URI,
-  { useNewUrlParser: true, useUnifiedTopology: true }
+  { useNewUrlParser: true, useUnifiedTopology: true, useMongoClient: true }
 )
 
 app.use(express.static('build'));
