@@ -8,7 +8,6 @@ const { uploadFile } = require('./upload');
 const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 const schema = require('./schema/schema.js');
-const e = require('express');
 const links = [];
 const app = express();
 app.use((req, res, next) => {
