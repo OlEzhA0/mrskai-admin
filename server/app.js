@@ -16,20 +16,10 @@ app.use((req, res, next) => {
   next()
 })
 
-async function start() {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI ||
-      `mongodb+srv://${process.env.MongoLogin}:${process.env.MongoPass}@test.emyio.mongodb.net/products?retryWrites=true&w=majority`,
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    )
-
-    app.listen(PORT, err => {
-      err ? console.log(err) : console.log('Server started!');
-    });
-  } catch (e) { }
-}
-
-
+mongoose.connect(process.env.MONGODB_URI ||
+  `mongodb+srv://${process.env.MongoLogin}:${process.env.MongoPass}@test.emyio.mongodb.net/products?retryWrites=true&w=majority`,
+  { useNewUrlParser: true, useUnifiedTopology: true }
+)
 
 app.use(express.static('build'));
 app.use(cors());
@@ -37,8 +27,6 @@ app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true,
 }));
-start();
-
 
 app.post('/upload', upload.any('uploaded_file'), (req, res) => {
   const result = req.files[0];
@@ -62,3 +50,7 @@ app.get('/clearPhotos', (req, res) => {
 const dbContection = mongoose.connection;
 dbContection.on('error', err => console.log(`Contection error: ${err}`));
 dbContection.once('open', () => console.log('Connected to DB'))
+
+app.listen(PORT, err => {
+  err ? console.log(err) : console.log('Server started!');
+});
