@@ -34,6 +34,10 @@ export const EditingPage: React.FC = () => {
   const [cancelSuccess, setCancelSuccess] = useState(false);
   const [cancel, setCancel] = useState(false);
 
+  const clearServerPhotos = () => {
+    fetch(`${process.env.REACT_APP_CLEAR_PHOTOS}`);
+  };
+
   useEffect(() => {
     if (!isNewProduct && data && data.product) {
       const {
@@ -120,7 +124,10 @@ export const EditingPage: React.FC = () => {
             },
           ],
         })
-          .then(() => setCancelSuccess(true))
+          .then(() => {
+            setCancelSuccess(true);
+            clearServerPhotos();
+          })
           .catch(() => console.log("error"));
       }
     }
@@ -252,7 +259,10 @@ export const EditingPage: React.FC = () => {
             </div>
             <button
               className="EditingPage__Button EditingPage__Button--cancel EditingPage__Button--cancelN"
-              onClick={() => setCancel(true)}
+              onClick={() => {
+                setCancel(true);
+                clearServerPhotos();
+              }}
             >
               Отмена
             </button>

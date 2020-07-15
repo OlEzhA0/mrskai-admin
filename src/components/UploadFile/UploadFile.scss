@@ -28,7 +28,7 @@
 
   &__Button {
     width: 160px;
-    height: 100%;
+    height: 40px;
     font-size: 15px;
     color: #a6a6a6;
     background-color: #ebebeb;
@@ -37,6 +37,10 @@
     outline: 0;
     cursor: pointer;
     transition: all 0.3s;
+
+    &--rel {
+      margin-left: 20px;
+    }
 
     &:hover {
       background-color: #f5f3f3;
@@ -61,6 +65,11 @@
       background-color: #000;
       border: 1px solid #000;
     }
+  }
+
+  &__Wrapper {
+    display: flex;
+    justify-content: space-between;
   }
 
   &__LoadWrap {

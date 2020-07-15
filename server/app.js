@@ -43,7 +43,6 @@ start();
 
 app.post('/upload', upload.any('uploaded_file'), (req, res) => {
   const result = req.files[0];
-  console.log('start upload', result);
   if (!links.some(link => link.includes(result.originalname))) {
     const answerLink = uploadFile(result.path, result.originalname);
     links.push(answerLink);

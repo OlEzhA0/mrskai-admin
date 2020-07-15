@@ -60,10 +60,6 @@ export const UploadFile: React.FC<Props> = ({
     );
   };
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/clearPhotos`);
-  }, []);
-
   const setPreviewPhoto = (photo: string) => {
     setValues(photo, name);
     setError(false, name);
@@ -78,47 +74,51 @@ export const UploadFile: React.FC<Props> = ({
   return (
     <>
       <div className="UploadFile__Wrap">
-        <form
-          encType="multipart/form-data"
-          onSubmit={handleSend}
-          action="/upload"
-          method="post"
-          className="UploadFile"
-        >
-          <label htmlFor="filedata">
-            <input
-              type="file"
-              name="uploaded_file"
-              id="filedata"
-              onChange={handleLoadFile}
-              className="UploadFile__Input"
-            />
-            <span
-              className={cn({
-                UploadFile__Custom: true,
-                "UploadFile__Custom--error":
-                  previewError || !previewPhoto || !photos.length,
-                "UploadFile__Custom--success":
-                  !previewError && previewPhoto && photos.length,
-              })}
-              data-title={`${file?.name || "Загрузите ваше фото"}`}
-            />
-          </label>
-          <button
-            className="UploadFile__Button"
-            onClick={handleSend}
-            disabled={disabledButton}
+        <div className="UploadFile__Wrapper">
+          <form
+            encType="multipart/form-data"
+            onSubmit={handleSend}
+            action="/upload"
+            method="post"
+            className="UploadFile"
           >
-            Добавить фото
-          </button>
+            <label htmlFor="filedata">
+              <input
+                type="file"
+                name="uploaded_file"
+                id="filedata"
+                onChange={handleLoadFile}
+                className="UploadFile__Input"
+              />
+              <span
+                className={cn({
+                  UploadFile__Custom: true,
+                  "UploadFile__Custom--error":
+                    previewError || !previewPhoto || !photos.length,
+                  "UploadFile__Custom--success":
+                    !previewError && previewPhoto && photos.length,
+                })}
+                data-title={`${file?.name || "Загрузите ваше фото"}`}
+              />
+            </label>
+            <button
+              className="UploadFile__Button"
+              type="submit"
+              onClick={handleSend}
+              disabled={!file || disabledButton}
+            >
+              Добавить фото
+            </button>
+          </form>
           <button
-            className="UploadFile__Button"
+            className="UploadFile__Button UploadFile__Button--rel"
             onClick={getData}
-            disabled={!file || disabledButton}
+            type="button"
+            disabled={disabledButton}
           >
             Перезагрузить
           </button>
-        </form>
+        </div>
         {photos.length > 0 && (
           <ul className="UploadFile__List">
             {photos.map((photo) => (
