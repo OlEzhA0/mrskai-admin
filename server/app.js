@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 async function start() {
   try {
     await mongoose.connect(process.env.MONGODB_URI ||
-      'mongodb+srv://root:bzxuWAkdWXrvzePv@test.emyio.mongodb.net/products?retryWrites=true&w=majority',
+      `mongodb+srv://${process.env.MongoLogin}:${process.env.MongoPass}@test.emyio.mongodb.net/products?retryWrites=true&w=majority`,
       { useNewUrlParser: true, useUnifiedTopology: true }
     )
 
