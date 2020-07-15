@@ -23,7 +23,7 @@ export const UploadFile: React.FC<Props> = ({
   setError,
 }) => {
   const [file, setFile] = useState<File | null>(null);
-
+  const [disabledButton, setDisabledButton] = useState(false);
   const handleLoadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     e.preventDefault();
@@ -41,6 +41,7 @@ export const UploadFile: React.FC<Props> = ({
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
+    setDisabledButton(true);
     const formData = new FormData();
     formData.set("photo", file!);
     postData(formData).then(
@@ -50,8 +51,12 @@ export const UploadFile: React.FC<Props> = ({
         setPhotos([...photos, res]);
         setFile(null);
         getData();
+        setDisabledButton(false);
       },
-      (err) => console.log("err")
+      (err) => {
+        setDisabledButton(false);
+        console.log(err);
+      }
     );
   };
 
@@ -99,10 +104,18 @@ export const UploadFile: React.FC<Props> = ({
               data-title={`${file?.name || "Загрузите ваше фото"}`}
             />
           </label>
-          <button className="UploadFile__Button" onClick={handleSend}>
+          <button
+            className="UploadFile__Button"
+            onClick={handleSend}
+            disabled={!file || disabledButton}
+          >
             Добавить фото
           </button>
-          <button className="UploadFile__Button" onClick={getData}>
+          <button
+            className="UploadFile__Button"
+            onClick={getData}
+            disabled={!file || disabledButton}
+          >
             Перезагрузить
           </button>
         </form>

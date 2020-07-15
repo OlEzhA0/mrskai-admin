@@ -1,8 +1,8 @@
 const URL = process.env.REACT_APP_SERVER || 'http://localhost:5000';
-
+const UPLOAD_URL = process.env.REACT_APP_UPLOAD_FILE;
 
 export async function postData(formData: any) {
-  const res = await fetch(`${URL}/upload`, {
+  const res = await fetch(`${UPLOAD_URL}`, {
     method: "POST",
     headers: {
       ContentType: "text/html; charset: utf-8",
