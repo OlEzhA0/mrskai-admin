@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 const ID = process.env.AWSAccessKeyId;
 const SECRET = process.env.AWSSecretKey;
 
-const BUCKET_NAME = process.env.Bucket;
+const BUCKET_NAME = 'mrskai';
 
 const s3 = new AWS.S3({
   accessKeyId: ID,
