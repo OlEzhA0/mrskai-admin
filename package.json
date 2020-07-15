@@ -43,7 +43,7 @@
     "node": "12.11.1"
   },
   "scripts": {
-    "start": "serve -s build",
+    "start": "node server/app.js",
     "client": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
