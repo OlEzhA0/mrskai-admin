@@ -107,7 +107,7 @@ export const UploadFile: React.FC<Props> = ({
           <button
             className="UploadFile__Button"
             onClick={handleSend}
-            disabled={!file || disabledButton}
+            disabled={disabledButton}
           >
             Добавить фото
           </button>

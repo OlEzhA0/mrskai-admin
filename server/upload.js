@@ -27,7 +27,7 @@ const uploadFile = (fileName, origName) => {
     }
     console.log(`File uploaded successfully. ${data.Location}`);
   });
-  const link = `https://${BUCKET_NAME}.s3.amazonaws.com/${origName}`;
+  const link = `https://mrskai.s3.amazonaws.com/${origName}`;
 
   return link;
 };

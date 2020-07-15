@@ -1,5 +1,6 @@
 const URL = process.env.REACT_APP_SERVER || 'http://localhost:5000';
 const UPLOAD_URL = process.env.REACT_APP_UPLOAD_FILE;
+const RELOAD_URL = process.env.REACT_APP_RELOAD_FILE;
 
 export async function postData(formData: any) {
   const res = await fetch(`${UPLOAD_URL}`, {
@@ -15,7 +16,7 @@ export async function postData(formData: any) {
 }
 
 export const getPhotos = async () => {
-  const res = await fetch(`${URL}/takePhotos`);
+  const res = await fetch(`${RELOAD_URL}`);
   const json = await res.json();
 
   return json;
