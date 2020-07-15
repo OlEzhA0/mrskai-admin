@@ -1,4 +1,4 @@
-const URL = process.env.REACT_APP_SERVER;
+const URL = process.env.REACT_APP_SERVER || 'http://localhost:5000';
 
 
 export async function postData(formData: any) {
