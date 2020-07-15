@@ -1,5 +1,5 @@
 const express = require('express');
-const graphqlHTTP = require('express-graphql').graphqlHTTP;
+const { graphqlHTTP } = require('express-graphql');
 const mongoose = require('mongoose');
 require('dotenv').config()
 const multer = require('multer')
@@ -8,20 +8,29 @@ const { uploadFile } = require('./upload');
 const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 const schema = require('./schema/schema.js');
-const bodyParser = require('body-parser');
+const e = require('express');
 const links = [];
 const app = express();
-
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.set('Access-Control-Allow-Headers', 'contenttype');
   next()
 })
 
-mongoose.connect(process.env.MONGODB_URI ||
-  'mongodb+srv://root:bzxuWAkdWXrvzePv@test.emyio.mongodb.net/products?retryWrites=true&w=majority',
-  { useNewUrlParser: true, useUnifiedTopology: true }
-)
+async function start() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI ||
+      'mongodb+srv://root:bzxuWAkdWXrvzePv@test.emyio.mongodb.net/products?retryWrites=true&w=majority',
+      { useNewUrlParser: true, useUnifiedTopology: true }
+    )
+
+    app.listen(PORT, err => {
+      err ? console.log(err) : console.log('Server started!');
+    });
+  } catch (e) { }
+}
+
+
 
 app.use(express.static('build'));
 app.use(cors());
@@ -29,6 +38,7 @@ app.use('/graphql', graphqlHTTP({
   schema,
   graphiql: true,
 }));
+start();
 
 
 app.post('/upload', upload.any('uploaded_file'), (req, res) => {
@@ -52,7 +62,3 @@ app.get('/clearPhotos', (req, res) => {
 const dbContection = mongoose.connection;
 dbContection.on('error', err => console.log(`Contection error: ${err}`));
 dbContection.once('open', () => console.log('Connected to DB'))
-
-app.listen(PORT, err => {
-  err ? console.log(err) : console.log('Server started!');
-});
