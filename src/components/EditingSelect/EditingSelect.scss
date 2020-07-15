@@ -1,0 +1,96 @@
+.EditingSelect {
+  margin-top: 20px;
+  height: 40px;
+  &--after {
+    cursor: pointer;
+    height: 40px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+  }
+
+  &__Main {
+    width: 60%;
+    height: 40px;
+    border: 1px solid #ebebeb;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 11px 16px;
+    background-color: #fff;
+    font-family: "Roboto", serif;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s;
+
+    &--open {
+      border-radius: 10px 10px 0 0;
+      border-bottom: 1px solid #fff;
+    }
+
+    &--success {
+      border: 1px solid #6fcf97;
+    }
+
+    &--error {
+      border: 1px solid #ff4d42;
+    }
+  }
+
+  &__MainText {
+    height: 18px;
+    font-size: 15px;
+
+    &--default {
+      color: #a6a6a6;
+      font-size: 15px;
+    }
+  }
+
+  &__Arrow {
+    transition: all 0.3s;
+    &--down {
+      transform: rotate(-180deg);
+    }
+  }
+
+  &__List {
+    width: 60%;
+    list-style-type: none;
+    background-color: #fff;
+    border: 1px solid #ebebeb;
+    border-top: 1px solid #fff;
+    transform: translateY(-30px);
+    box-sizing: border-box;
+    border-radius: 0 0 10px 10px;
+    padding-bottom: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: -1;
+
+    &--open {
+      position: absolute;
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-3px);
+    }
+  }
+
+  &__Item {
+    padding-left: 16px;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: #ebebeb;
+    }
+  }
+}

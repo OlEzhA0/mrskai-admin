@@ -1,0 +1,12 @@
+.ProductsPage {
+    &__NoProducts {
+    text-align: center;
+    color: #a6a6a6;
+  }
+}
+
+.Spinner {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}

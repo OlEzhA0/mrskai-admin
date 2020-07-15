@@ -1,0 +1,214 @@
+.UploadFile {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+
+  &__Input {
+    display: none;
+  }
+
+  &__Wrap {
+    width: 60%;
+    margin-top: 20px;
+  }
+
+  &__Photo {
+    width: 108px;
+    height: 135px;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__Button {
+    width: 160px;
+    height: 100%;
+    font-size: 15px;
+    color: #a6a6a6;
+    background-color: #ebebeb;
+    border-radius: 10px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+  
+    &:hover {
+      background-color: #f5f3f3;
+    }
+  }
+
+  &__Load,
+  &__Review {
+    height: 41px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+      color: #fff;
+      background-color: #000;
+      border: 1px solid #000;
+    }
+  }
+
+  &__LoadWrap {
+    position: absolute;
+    z-index: 5;
+    right: -130px;
+    top: 0;
+  }
+
+  &__Img {
+    height: 200px;
+    width: 100px;
+    object-fit: cover;
+    object-position: center;
+
+    &--preview {
+      box-sizing: border-box;
+      border: 2px solid rgb(0, 0, 0);
+    }
+  }
+
+  &__List {
+    display: flex;
+    list-style-type: none;
+    margin-top: 20px;
+  }
+
+  &__Item {
+    margin-right: 15px;
+    position: relative;
+    cursor: pointer;
+
+    &--preview {
+      &::after {
+        content: "Главная";
+        position: absolute;
+        width: 100%;
+        height: 22px;
+        background-color: #3886f3;
+        border-radius: 0 0 10px 10px;
+        color: #fff;
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 22px;
+        bottom: 4px;
+        left: 0;
+        font-size: 9px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  &__Delete {
+    opacity: 0.6;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    transition: all 0.3s;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__DeleteImage {
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 10px;
+    height: 10px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: rgb(172, 5, 5);
+    opacity: 0;
+    transition: all 0.5s;
+  }
+
+  &__OptionLoad {
+    background-color: #fff;
+    border: 1px solid black;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: -250px;
+    z-index: 6;
+
+    &:hover {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+
+  &__Custom {
+    position: relative;
+    width: 308px;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 2.6rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    color: rgb(235, 229, 229);
+    background-color: #fff;
+    border: 1px solid #ebebeb;
+    box-sizing: border-box;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s;
+
+    &--error {
+      border: 1px solid #ff4d42;
+    }
+
+    &--success {
+      border: 1px solid #6fcf97;
+    }
+
+    &::before {
+      content: "Обзор";
+      position: absolute;
+      top: -1px;
+      right: -2px;
+      bottom: -1px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      height: 2.6rem;
+      padding: 0 1rem;
+      font-weight: 300;
+      color: #a6a6a6;
+      background-color: #ebebeb;
+      box-sizing: border-box;
+      transition: all 0.3s;
+      border-radius: 10px;
+    }
+
+    &::after {
+      content: attr(data-title);
+      color: #c4c4c4;
+    }
+
+    &:hover::before {
+      color: rgb(170, 166, 166);
+      background-color: #f5f3f3;
+    }
+  }
+}
+
+.UploadFile__Item:hover .UploadFile__DeleteImage {
+  opacity: 1;
+}

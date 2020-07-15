@@ -1,0 +1,89 @@
+.EditingSizes {
+  width: 60%;
+  background: #ffffff;
+  border: 1px solid #ebebeb;
+  box-sizing: border-box;
+  border-radius: 10px;
+  height: 40px;
+  margin-top: 20px;
+  line-height: 40px;
+  padding: 0 16px;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+
+  &--open {
+    border-radius: 10px 10px 0 0;
+    border-bottom: 0;
+  }
+
+  &--error {
+    border: 1px solid #ff4d42;
+  }
+
+  &--success {
+    border: 1px solid #6fcf97;
+  }
+
+  &__Sizes {
+    font-size: 15px;
+    color: #1d1d1d;
+  }
+
+  &__DefaultTitle {
+    color: #a6a6a6;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  &__Title {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__OptionList {
+    width: 60%;
+    background-color: #fff;
+    border: 1px solid #ebebeb;
+    padding-bottom: 5px;
+    border-radius: 0 0 10px 10px;
+    box-sizing: border-box;
+    border-top: 0;
+    transform: translateY(-30px);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.4s;
+    z-index: -1;
+    position: absolute;
+
+    &--open {
+      z-index: 10;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+
+  &__Arrow {
+    transition: all 0.3s;
+    &--down {
+      transform: rotate(-180deg);
+    }
+  }
+
+  &__OptionItem {
+    height: 30px;
+    align-items: center;
+    padding: 0 17px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+      background-color: #ebebeb;
+    }
+  }
+
+  &__Checkbox {
+    cursor: pointer;
+  }
+}

@@ -1,0 +1,74 @@
+.SideBar {
+  width: 276px;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  padding: 46px 40px 0 46px;
+  box-sizing: border-box;
+  $color-main-gray: #a6a6a6;
+
+  &__PanelLogo {
+    width: 188px;
+    height: 50px;
+    background: #ebebeb;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 50px;
+    text-transform: uppercase;
+  }
+
+  &__PanelLogoText {
+    font-size: 14px;
+    color: $color-main-gray;
+    font-weight: bold;
+  }
+
+  &__Nav {
+    text-transform: uppercase;
+    font-size: 13px;
+    margin: 40px 0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    color: $color-main-gray;
+  }
+
+  &__NavList {
+    list-style-type: none;
+  }
+
+  &__NavItem {
+    height: 40px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    transition: all 0.3s;
+
+    &:hover {
+      border-radius: 10px;
+      background-color: #ebebeb;
+    }
+  }
+
+  &__NavLink {
+    text-decoration: none;
+  }
+
+  &__ActiveNavLink {
+    border-radius: 10px;
+    background-color: #ebebeb;
+  }
+
+  &__Logout {
+    margin-top: 40px;
+  }
+
+  &__LogoutText {
+    text-align: center;
+    color: #a6a6a6;
+    font-size: 15px;
+    font-family: "Roboto", serif;
+    cursor: pointer;
+  }
+}

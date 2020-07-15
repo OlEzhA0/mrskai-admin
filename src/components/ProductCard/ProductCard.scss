@@ -1,0 +1,135 @@
+.ProductCard {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 16px;
+  padding-bottom: 15px;
+  margin-bottom: 12px;
+  font-family: "Roboto", sans-serif;
+  position: relative;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &::after {
+    transition: all 0.3s;
+
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: #ebebeb;
+    left: 0;
+    bottom: 0;
+  }
+
+  &:hover::after {
+    background-color: #3886f3;
+  }
+
+  &__Checkbox {
+    cursor: pointer;
+  }
+
+  &__LeftSide {
+    display: flex;
+    align-items: center;
+  }
+
+  &__Photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 24px;
+    object-fit: cover;
+    object-position: center;
+    transition: all 0.3s;
+  }
+
+  &__Text {
+    margin-left: 21px;
+  }
+
+  &__Title {
+    transition: all 0.2s;
+    color: #1d1d1d;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  &__Type {
+    font-size: 13px;
+    color: #a6a6a6;
+  }
+
+  &__Prices {
+    display: flex;
+    flex-direction: column;
+    color: #a6a6a6;
+    font-size: 13px;
+    text-align: center;
+    margin-right: 10px;
+  }
+
+  &__LastPrice {
+    text-decoration-line: line-through;
+  }
+
+  &__CurrentPrice {
+    margin-top: 5px;
+  }
+
+  &__RightSide {
+    display: flex;
+    align-items: center;
+  }
+
+  &__OptionsList {
+    display: flex;
+    list-style-type: none;
+  }
+
+  &__OptionsItem {
+    padding: 5px;
+    margin-left: 27px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    &:hover {
+      background-color: #ebebeb;
+      border-radius: 4px;
+    }
+
+    &--disabled {
+      z-index: -1;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 24px;
+        height: 30px;
+        left: 0;
+        top: 0;
+        z-index: 1;
+      }
+    }
+  }
+
+  &__Active {
+    opacity: 1;
+    transition: all 0.3s;
+  }
+
+  &__NotActive {
+    opacity: 0.6;
+  }
+}
+
+.ProductCard:hover .ProductCard__Title {
+  color: #3886f3;
+}
+
+.ProductCard:hover .ProductCard__Photo {
+  transform: scale(1.1);
+  border-radius: 10px;
+}

@@ -1,0 +1,91 @@
+.ProductsSelect {
+  margin-left: 40px;
+  display: flex;
+
+  &--after {
+    cursor: pointer;
+    height: 40px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+  }
+
+  &__Select {
+    position: relative;
+  }
+
+  &__Title {
+    color: #a6a6a6;
+    font-size: 15px;
+    font-family: "Roboto", sans-serif;
+    line-height: 40px;
+  }
+
+  &__Main {
+    margin-left: 16px;
+    display: flex;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 16px;
+    box-sizing: border-box;
+    background-color: #ebebeb;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+
+    &--open {
+      border-radius: 10px 10px 0 0;
+    }
+  }
+
+  &__MainText {
+    color: #a6a6a6;
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  &__Img {
+    margin-top: 2px;
+    transition: all 0.5s;
+    &--open {
+      transform-origin: center;
+      transform: rotate(-180deg);
+    }
+  }
+
+  &__List {
+    right: 0;
+    top: 40px;
+    position: absolute;
+    list-style-type: none;
+    background-color: #ebebeb;
+    border-radius: 0 0 10px 10px;
+    padding: 0 0 5px;
+    box-sizing: border-box;
+    transform: translateY(-30px) scale(1, 0.8);
+    transition: all 0.3s;
+    visibility: hidden;
+    opacity: 0;
+    &--open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      z-index: 1;
+    }
+  }
+
+  &__Item {
+    line-height: 30px;
+    padding-left: 16px;
+    height: 30px;
+    font-size: 15px;
+    color: #a6a6a6;
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+      background-color: #e3e3e3;
+    }
+  }
+}

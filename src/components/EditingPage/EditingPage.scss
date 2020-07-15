@@ -1,0 +1,65 @@
+.EditingPage {
+  margin-bottom: 100px;
+  font-family: "Roboto", sans-serif;
+
+  &__Fields {
+    margin-top: 40px;
+  }
+
+  &__Button {
+    width: 47%;
+    height: 49px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s;
+
+    &--add {
+      background-color: #2275e9;
+      color: #fff;
+
+      &:hover {
+        background-color: #1a62c7;
+      }
+    }
+
+    &--cancel {
+      background-color: #ebebeb;
+      color: #a6a6a6;
+
+      &:hover {
+        background-color: #d8d4d4;
+      }
+    }
+
+    &--delete {
+      background-color: #ff4d42;
+      color: #fff;
+
+      &:hover {
+        background-color: #cf3229;
+      }
+    }
+
+    &--cancelN {
+      background-color: #ebebeb;
+      color: #a6a6a6;
+      width: 60%;
+      margin-top: 16px;
+
+      &:hover {
+        background-color: #d8d4d4;
+      }
+    }
+  }
+
+  &__Buttons {
+    margin-top: 40px;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
