@@ -1,4 +1,4 @@
-const URL = 'http://localhost:5000';
+const URL = process.env.REACT_APP_SERVER;
 
 
 export async function postData(formData: any) {
@@ -15,7 +15,7 @@ export async function postData(formData: any) {
 }
 
 export const getPhotos = async () => {
-  const res = await fetch(`http://localhost:5000/takePhotos`);
+  const res = await fetch(`${URL}/takePhotos`);
   const json = await res.json();
 
   return json;
