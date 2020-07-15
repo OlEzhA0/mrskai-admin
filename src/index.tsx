@@ -7,18 +7,18 @@ import { ApolloProvider } from "react-apollo";
 import { AppContextWrapper } from "./appContext";
 
 const client = new ApolloClient({
-  uri: `https://mrskai-admin-panel.herokuapp.com/graphql`,
+  uri: `http://localhost:5000/graphql`,
 });
 
 ReactDOM.render(
-  <AppContextWrapper>
-    <ApolloProvider client={client}>
+  <ApolloProvider client={client}>
+    <AppContextWrapper>
       <HashRouter>
         <React.StrictMode>
           <App />
         </React.StrictMode>
       </HashRouter>
-    </ApolloProvider>
-  </AppContextWrapper>,
+    </AppContextWrapper>
+  </ApolloProvider>,
   document.getElementById("root")
 );

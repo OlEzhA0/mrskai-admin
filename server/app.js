@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 })
 
 mongoose.connect(
-  `mongodb+srv://root:bzxuWAkdWXrvzePv@test.emyio.mongodb.net/products?retryWrites=true&w=majority`,
+  process.env.DATABASE_URI,
   { useNewUrlParser: true, useUnifiedTopology: true }
 )
 
