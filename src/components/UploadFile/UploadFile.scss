@@ -37,7 +37,7 @@
     outline: 0;
     cursor: pointer;
     transition: all 0.3s;
-  
+
     &:hover {
       background-color: #f5f3f3;
     }
@@ -172,29 +172,30 @@
 
     &--error {
       border: 1px solid #ff4d42;
+      box-sizing: border-box;
     }
 
     &--success {
       border: 1px solid #6fcf97;
+      box-sizing: border-box;
     }
 
     &::before {
       content: "Обзор";
       position: absolute;
-      top: -1px;
-      right: -2px;
-      bottom: -1px;
+      top: 0;
+      right: 0;
       z-index: 2;
       display: flex;
       align-items: center;
-      height: 2.6rem;
+      height: 40px;
       padding: 0 1rem;
       font-weight: 300;
       color: #a6a6a6;
       background-color: #ebebeb;
       box-sizing: border-box;
       transition: all 0.3s;
-      border-radius: 10px;
+      border-radius: 9px;
     }
 
     &::after {

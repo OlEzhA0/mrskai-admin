@@ -9,7 +9,6 @@ import { deleteProductMutation } from "./mutation";
 import { productsQuery } from "./components/ProductsPage/query";
 import { EditingPage } from "./components/EditingPage";
 import { EditingContextWrapper } from "./EditingContext";
-import ApolloClient from "apollo-boost";
 
 const App = () => {
   const { deletePopup, deletePopupOpen, currentId } = useContext(AppContext);
