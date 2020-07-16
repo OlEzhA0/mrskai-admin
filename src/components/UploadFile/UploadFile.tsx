@@ -58,7 +58,9 @@ export const UploadFile: React.FC<Props> = ({
         setDisabledButton(false);
         console.log(err);
       }
-    );
+    ).then(() => {
+      setTimeout(getData, 500);
+    });
   };
 
   const setPreviewPhoto = (photo: string) => {
