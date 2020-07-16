@@ -35,6 +35,7 @@ export const UploadFile: React.FC<Props> = ({
   const getData = () => {
     setPhotos([]);
     getPhotos().then((photos) => {
+      console.log(photos);
       setPhotos(photos);
     });
   };
