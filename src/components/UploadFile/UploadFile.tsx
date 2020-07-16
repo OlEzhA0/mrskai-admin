@@ -61,6 +61,7 @@ export const UploadFile: React.FC<Props> = ({
   };
 
   const setPreviewPhoto = (photo: string) => {
+    console.log(typeof photo);
     setValues(photo, name);
     setError(false, name);
   };
@@ -138,13 +139,18 @@ export const UploadFile: React.FC<Props> = ({
                     alt="model"
                     className="UploadFile__Photo"
                     onError={getData}
-                    onClick={() => setPreviewPhoto(photo)}
+                    onClick={() => {
+                      console.log(photo)
+                      setPreviewPhoto(photo);
+                    }}
                   />
                   <img
                     src="images/edit/edit.svg"
                     alt="delete"
                     className="UploadFile__Delete"
-                    onClick={() => deletePhotoFromForm(photo)}
+                    onClick={() => {
+                      deletePhotoFromForm(photo);
+                    }}
                   />
                 </li>
               ))}

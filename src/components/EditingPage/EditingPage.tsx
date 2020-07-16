@@ -82,7 +82,7 @@ export const EditingPage: React.FC = () => {
     }
   }, [data]);
 
-  const isOk = async () => {
+  const isOk = () => {
     let isError = false;
     const errors: ErrorsField = {
       title: validation("title"),
@@ -94,7 +94,8 @@ export const EditingPage: React.FC = () => {
       lastPrice: validation("lastPrice"),
       type: validation("type"),
       care: validation("care"),
-      previewPhoto: fieldsParams.previewPhoto.length === 0,
+      // previewPhoto: fieldsParams.previewPhoto.length === 0,
+      previewPhoto: false,
       sizes: choosenSizes.length === 0,
     };
 
@@ -119,36 +120,41 @@ export const EditingPage: React.FC = () => {
       const sizes = choosenSizes.join(",");
 
       if (isNewProduct) {
-        await addProduct({
-          variables: {
-            title: fieldsParams.title,
-            descr: fieldsParams.descr,
-            color: fieldsParams.color,
-            price: fieldsParams.price,
-            modelParam: fieldsParams.modelParam,
-            composition: fieldsParams.composition,
-            sizes,
-            lastPrice: fieldsParams.lastPrice,
-            type: fieldsParams.type,
-            photos,
-            care: fieldsParams.care,
-            previewPhoto: fieldsParams.previewPhoto[0],
-          },
-          refetchQueries: [
-            {
-              query: productQuery,
-            },
-          ],
-        })
-          .then(() => {
-            setCancelSuccess(true);
-            deleteAllPhotosFromServer("clearAll");
-          })
-          .catch((err) => console.log("error cant to send", err));
+        addProd(sizes);
       } else {
         console.log("it will update");
       }
     }
+  };
+
+  const addProd = async (sizes: string) => {
+    console.log(fieldsParams.previewPhoto)
+    await addProduct({
+      variables: {
+        title: fieldsParams.title,
+        descr: fieldsParams.descr,
+        color: fieldsParams.color,
+        price: fieldsParams.price,
+        modelParam: fieldsParams.modelParam,
+        composition: fieldsParams.composition,
+        sizes,
+        lastPrice: fieldsParams.lastPrice,
+        type: fieldsParams.type,
+        photos,
+        care: fieldsParams.care,
+        previewPhoto: fieldsParams.previewPhoto[0],
+      },
+      refetchQueries: [
+        {
+          query: productQuery,
+        },
+      ],
+    })
+      .then(() => {
+        setCancelSuccess(true);
+        deleteAllPhotosFromServer("clearAll");
+      })
+      .catch((err) => console.log("error cant to send", err));
   };
 
   return (

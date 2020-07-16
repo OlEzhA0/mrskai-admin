@@ -8,6 +8,7 @@ import { AppContextWrapper } from "./appContext";
 
 const client = new ApolloClient({
   uri: `${process.env.REACT_APP_SERVER}/graphql`,
+  
 });
 
 ReactDOM.render(
