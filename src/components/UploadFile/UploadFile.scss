@@ -7,7 +7,6 @@
   align-items: center;
   box-sizing: border-box;
   cursor: pointer;
-  font-family: "Roboto", sans-serif;
 
   &__Input {
     display: none;
@@ -24,6 +23,20 @@
     border-radius: 10px;
     object-fit: cover;
     object-position: center;
+  }
+
+  &__Stub {
+    width: 108px;
+    height: 135px;
+    margin-top: 20px;
+    font-size: 16px;
+    white-space: normal;
+    background-color: #eeeeeea5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a6a6a6;
   }
 
   &__Button {
@@ -169,7 +182,7 @@
 
   &__Custom {
     position: relative;
-    width: 308px;
+    width: 450px;
     top: 0;
     right: 0;
     left: 0;
@@ -216,6 +229,7 @@
     &::after {
       content: attr(data-title);
       color: #c4c4c4;
+      font-size: 14px;
     }
 
     &:hover::before {

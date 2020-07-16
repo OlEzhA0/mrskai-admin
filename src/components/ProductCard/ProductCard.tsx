@@ -28,7 +28,12 @@ export const ProductCard: React.FC<Props> = ({
   previewPhoto,
   singleClone,
 }) => {
-  const { deletePopupOpen, checked, setCheckedFn } = useContext(AppContext);
+  const {
+    deletePopupOpen,
+    checked,
+    setCheckedFn,
+    setBackgroundCover,
+  } = useContext(AppContext);
 
   return (
     <div className="ProductCard">
@@ -95,7 +100,10 @@ export const ProductCard: React.FC<Props> = ({
               ProductCard__OptionsItem: true,
               "ProductCard__OptionsItem--disabled": checked.length,
             })}
-            onClick={() => deletePopupOpen(true, id)}
+            onClick={() => {
+              deletePopupOpen(true, id);
+              setBackgroundCover(true);
+            }}
           >
             <img
               src="images/products/deleteProd.svg"

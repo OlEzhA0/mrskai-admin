@@ -1,10 +1,8 @@
 .SideBar {
-  width: 276px;
+  width: 246px;
   position: fixed;
   height: 100vh;
-  left: 0;
-  top: 0;
-  padding: 46px 40px 0 46px;
+  padding: 46px 40px 0 0;
   box-sizing: border-box;
   $color-main-gray: #a6a6a6;
 
@@ -28,7 +26,7 @@
     text-transform: uppercase;
     font-size: 13px;
     margin: 40px 0;
-    font-family: "Roboto", sans-serif;
+    
     font-weight: 300;
     color: $color-main-gray;
   }

@@ -22,20 +22,25 @@ export const fieldsProduct = [
 ];
 
 export const ADMIN_PANEL_NAV: AdminNav = {
-  orders: {
-    name: "Заказы",
-    img: "images/nav/orders.svg",
-    link: "/orders",
+  analytics: {
+    name: "Аналитика",
+    img: "images/nav/analytics.svg",
+    link: "/analytics",
   },
   products: {
     name: "Товары",
     img: "images/nav/products.svg",
     link: "/products",
   },
-  pages: {
-    name: "Страницы",
-    img: "images/nav/pages.svg",
-    link: "/pages",
+  users: {
+    name: "Пользователи",
+    img: "images/nav/users.svg",
+    link: "/users",
+  },
+  orders: {
+    name: "Заказы",
+    img: "images/nav/orders.svg",
+    link: "/orders",
   },
   settings: {
     name: "Настройки",

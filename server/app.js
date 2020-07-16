@@ -45,8 +45,10 @@ app.get('/takePhotos', (req, res) => {
   res.json(links)
 });
 
-app.put('/clearPhotos', (req, res) => {
-  links.length = 0;
+app.put('/clearPhotos', bodyParser.text(), (req, res) => {
+  if (req.body === 'clearAll') {
+    links = [];
+  }
 });
 
 app.put('/deletePhoto', bodyParser.text(), (req, res) => {

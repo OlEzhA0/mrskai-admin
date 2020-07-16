@@ -1,44 +1,16 @@
 import React, { useState } from "react";
 
-interface FieldsParams {
-  title: string;
-  descr: string;
-  color: string;
-  price: string;
-  modelParam: string;
-  composition: string;
-  lastPrice: string;
-  type: string;
-  previewPhoto: string;
-  care: string;
-  [key: string]: string;
-}
-
-interface ErrorsField {
-  title: boolean;
-  descr: boolean;
-  color: boolean;
-  price: boolean;
-  modelParam: boolean;
-  composition: boolean;
-  lastPrice: boolean;
-  sizes: boolean;
-  type: boolean;
-  care: boolean;
-  previewPhoto: boolean;
-  [key: string]: boolean;
-}
-
 interface Context {
   fieldsParams: FieldsParams;
   errorsField: ErrorsField;
   handleChangeFields: (value: string, name: string) => void;
   handleError: (value: boolean, name: string) => void;
-  validation: (field: string) => void;
+  validation: (field: string) => boolean;
   setFieldsParams: (params: FieldsParams) => void;
   setSizes: (size: string) => void;
   choosenSizes: string[];
   setChoosenSizes: (size: string[]) => void;
+  setErrorsField: (fields: ErrorsField) => void;
 }
 
 export const EditingContext = React.createContext<Context>({
@@ -69,11 +41,12 @@ export const EditingContext = React.createContext<Context>({
   },
   handleChangeFields: () => {},
   handleError: () => {},
-  validation: () => {},
+  validation: () => false,
   setFieldsParams: () => {},
   setSizes: () => {},
   choosenSizes: [],
   setChoosenSizes: () => {},
+  setErrorsField: () => {},
 });
 
 export const EditingContextWrapper: React.FC = ({ children }) => {
@@ -123,9 +96,13 @@ export const EditingContextWrapper: React.FC = ({ children }) => {
   };
 
   const validation = (name: string) => {
-    if (fieldsParams[name].trim().length < 3) {
-      setErrorsField({ ...errorsField, [name]: true });
+    if (fieldsParams[name].length < 3) {
+      handleError(true, name);
+
+      return true;
     }
+
+    return false;
   };
 
   return (
@@ -140,6 +117,7 @@ export const EditingContextWrapper: React.FC = ({ children }) => {
         choosenSizes,
         setSizes,
         setChoosenSizes,
+        setErrorsField,
       }}
     >
       {children}

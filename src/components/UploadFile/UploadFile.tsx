@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./UploadFile.scss";
 import { getPhotos, postData, deleteFromServer } from "../../helpers";
 import cn from "classnames";
@@ -45,23 +45,19 @@ export const UploadFile: React.FC<Props> = ({
     setDisabledButton(true);
     const formData = new FormData();
     formData.set("photo", file!);
-    postData(formData)
-      .then(
-        (res) => {
-          setValues("", name);
-          setError(true, name);
-          setPhotos([...photos, res]);
-          setFile(null);
-          setDisabledButton(false);
-        },
-        (err) => {
-          setDisabledButton(false);
-          console.log(err);
-        }
-      )
-      .then(() => {
-        setTimeout(getData, 1000);
-      });
+    postData(formData).then(
+      (res) => {
+        setValues("", name);
+        setError(true, name);
+        setPhotos([...photos, res]);
+        setFile(null);
+        setDisabledButton(false);
+      },
+      (err) => {
+        setDisabledButton(false);
+        console.log(err);
+      }
+    );
   };
 
   const setPreviewPhoto = (photo: string) => {
@@ -99,11 +95,16 @@ export const UploadFile: React.FC<Props> = ({
                 className={cn({
                   UploadFile__Custom: true,
                   "UploadFile__Custom--error":
-                    previewError || !previewPhoto || !photos.length,
+                    (previewError && !previewPhoto && !photos.length) ||
+                    (!previewPhoto && photos.length),
                   "UploadFile__Custom--success":
                     !previewError && previewPhoto && photos.length,
                 })}
-                data-title={`${file?.name || "Загрузите ваше фото"}`}
+                data-title={`${
+                  !previewPhoto && photos.length
+                    ? "Выберите фото для превью или загрузите еще"
+                    : file?.name || "Загрузите ваше фото"
+                }`}
               />
             </label>
             <button
@@ -115,15 +116,12 @@ export const UploadFile: React.FC<Props> = ({
               Добавить фото
             </button>
           </form>
-          <button
-            className="UploadFile__Button UploadFile__Button--rel"
-            onClick={getData}
-            type="button"
-            disabled={disabledButton}
-          >
-            Перезагрузить
-          </button>
         </div>
+        {photos.length === 0 && (
+          <div className="UploadFile__Stub">
+            <img src="images/edit/emptyPhotos.svg" alt="empty" />
+          </div>
+        )}
         {photos.length > 0 && (
           <>
             <ul className="UploadFile__List">
@@ -134,13 +132,13 @@ export const UploadFile: React.FC<Props> = ({
                     UploadFile__Item: true,
                     "UploadFile__Item--preview": previewPhoto === photo,
                   })}
-                  onClick={() => setPreviewPhoto(photo)}
                 >
                   <img
                     src={photo}
                     alt="model"
                     className="UploadFile__Photo"
                     onError={getData}
+                    onClick={() => setPreviewPhoto(photo)}
                   />
                   <img
                     src="images/edit/edit.svg"

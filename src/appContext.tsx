@@ -8,6 +8,8 @@ interface Context {
   checked: string[];
   setCheckedFn: (id: string) => void;
   clearAllChecked: () => void;
+  bachgroundCover: boolean;
+  setBackgroundCover: (status: boolean) => void;
 }
 
 export const AppContext = React.createContext<Context>({
@@ -18,12 +20,15 @@ export const AppContext = React.createContext<Context>({
   checked: [],
   setCheckedFn: () => {},
   clearAllChecked: () => {},
+  bachgroundCover: false,
+  setBackgroundCover: () => {},
 });
 
 export const AppContextWrapper: React.FC = ({ children }) => {
   const [deletePopup, setDeletePopup] = useState(false);
   const [currentId, setCurrentId] = useState("");
   const [checked, setChecked] = useState<string[]>([]);
+  const [bachgroundCover, setBackgroundCover] = useState(false);
 
   const deletePopupOpen = (status: boolean, id?: string) => {
     setDeletePopup(status);
@@ -58,6 +63,8 @@ export const AppContextWrapper: React.FC = ({ children }) => {
         checked,
         setCheckedFn,
         clearAllChecked,
+        bachgroundCover,
+        setBackgroundCover
       }}
     >
       {children}

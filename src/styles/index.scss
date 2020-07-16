@@ -14,10 +14,11 @@ li {
 }
 
 html {
-  font-family: "Cera", serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 500;
   scroll-behavior: smooth;
   background-color: #fafafa;
+  position: relative;
 }
 
 .container {
@@ -31,69 +32,7 @@ html {
 
 .wrapper {
   width: 1340px;
-  position: absolute;
-  left: calc(50% - 23px);
-  transform: translateX(-50%);
-}
-
-.Delete {
-  position: absolute;
-  width: 386px;
-  height: 222px;
-  background-color: #fff;
-  z-index: 21;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-  padding: 45px 40px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  &__Text {
-    text-align: center;
-    align-items: center;
-    font-weight: bold;
-    font-size: 26px;
-    color: #1d1d1d;
-  }
-
-  &__Buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__Button {
-    width: 145px;
-    height: 50px;
-    border-radius: 10px;
-    border: 0;
-    outline: 0;
-    font-size: 15px;
-    color: #fff;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s;
-
-    &--delete {
-      background: #ff4d42;
-
-      &:hover {
-        background-color: #cc251c;
-      }
-    }
-
-    &--cancel {
-      background-color: #ebebeb;
-      color: #a6a6a6;
-
-      &:hover {
-        background-color: #f5f3f3;
-      }
-    }
-  }
+  margin: 0 auto;
 }
 
 .behind__Background {
@@ -105,6 +44,7 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
+  min-height: 100vh;
 }
 
 .Pages {
@@ -112,7 +52,7 @@ html {
     font-size: 32px;
     font-weight: bold;
     position: relative;
-
+    font-family: "Cera";
     &::after {
       content: "";
       position: absolute;
@@ -121,7 +61,7 @@ html {
       background-color: #c4c4c4;
       left: 0;
       bottom: -20px;
-    }    
+    }
   }
 
   &__Wrap {

@@ -4,45 +4,23 @@ import "./styles/index.scss";
 import { SideBar } from "./components/SideBar";
 import { ProductsPage } from "./components/ProductsPage";
 import { AppContext } from "./appContext";
-import { useMutation } from "react-apollo";
-import { deleteProductMutation } from "./mutation";
-import { productsQuery } from "./components/ProductsPage/query";
 import { EditingPage } from "./components/EditingPage";
 import { EditingContextWrapper } from "./EditingContext";
+import { PopupDeleteProduct } from "./components/PopupDeleteProduct";
 
 const App = () => {
-  const { deletePopup, deletePopupOpen, currentId } = useContext(AppContext);
-  const [deleteProduct] = useMutation(deleteProductMutation);
-
-  const handleDeleteProduct = async () => {
-    await deleteProduct({
-      variables: { id: currentId },
-      refetchQueries: [{ query: productsQuery }],
-    }).then(() => deletePopupOpen(false, ""));
-  };
+  const {
+    deletePopup,
+    bachgroundCover,
+  } = useContext(AppContext);
 
   return (
     <>
-      {deletePopup && (
+      {bachgroundCover && <div className="behind__Background" />}
+
+      {deletePopup && bachgroundCover && (
         <>
-          <div className="behind__Background" />
-          <div className="Delete">
-            <p className="Delete__Text">Удалить товар?</p>
-            <div className="Delete__Buttons">
-              <button
-                className="Delete__Button Delete__Button--delete"
-                onClick={handleDeleteProduct}
-              >
-                Удалить
-              </button>
-              <button
-                className="Delete__Button Delete__Button--cancel"
-                onClick={() => deletePopupOpen(false, "")}
-              >
-                Отмена
-              </button>
-            </div>
-          </div>
+          <PopupDeleteProduct />
         </>
       )}
       <div className="wrapper">

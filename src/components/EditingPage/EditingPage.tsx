@@ -12,7 +12,8 @@ import { EditingSizes } from "../EditingSizes";
 import { EditingColros } from "../EditingColors";
 import { EditingText } from "../EditingText";
 import { addProductMutation } from "../../mutation";
-import { deleteFromServer } from "../../helpers";
+import { AppContext } from "../../appContext";
+import { deleteAllPhotosFromServer } from "../../helpers";
 
 export const EditingPage: React.FC = () => {
   const location = useLocation();
@@ -26,7 +27,9 @@ export const EditingPage: React.FC = () => {
     setFieldsParams,
     choosenSizes,
     setChoosenSizes,
+    setErrorsField,
   } = useContext(EditingContext);
+  const { setBackgroundCover, deletePopupOpen } = useContext(AppContext);
 
   const prodId = location.pathname.split("/").filter((name) => name)[1];
   const { data } = useQuery(productQuery, { variables: { id: prodId } });
@@ -34,14 +37,13 @@ export const EditingPage: React.FC = () => {
   const [addProduct] = useMutation(addProductMutation);
   const [cancelSuccess, setCancelSuccess] = useState(false);
   const [cancel, setCancel] = useState(false);
-
-  const clearServerPhotos = () => {
-    fetch(`${process.env.REACT_APP_CLEAR_PHOTOS}`);
-  };
-
   useEffect(() => {
-    // clearServerPhotos();
-  }, [])
+    deleteAllPhotosFromServer("clearAll");
+
+    return () => {
+      deleteAllPhotosFromServer("clearAll");
+    };
+  }, []);
 
   useEffect(() => {
     if (!isNewProduct && data && data.product) {
@@ -72,7 +74,7 @@ export const EditingPage: React.FC = () => {
         type,
         previewPhoto,
       };
-      console.log(care);
+
       const newSizes = sizes.split(",");
       setChoosenSizes(newSizes);
       setPhotos(photos);
@@ -81,28 +83,37 @@ export const EditingPage: React.FC = () => {
   }, [data]);
 
   const isOk = async () => {
-    let error = false;
+    let isError = false;
+    const errors: ErrorsField = {
+      title: validation("title"),
+      descr: validation("descr"),
+      color: validation("color"),
+      price: validation("price"),
+      modelParam: validation("modelParam"),
+      composition: validation("composition"),
+      lastPrice: validation("lastPrice"),
+      type: validation("type"),
+      care: validation("care"),
+      previewPhoto: fieldsParams.previewPhoto.length === 0,
+      sizes: choosenSizes.length === 0,
+    };
 
-    Object.keys(fieldsParams).forEach((key) => {
-      validation(key);
-    });
+    setErrorsField(errors);
 
-    Object.keys(errorsField).forEach((key) => {
-      if (errorsField[key]) {
-        error = true;
+    Object.keys(errors).forEach((key) => {
+      if (errors[key]) {
+        isError = true;
         return;
       }
     });
 
     if (!photos.length) {
-      error = true;
+      isError = true;
     }
 
-    if (!choosenSizes.length) {
-      error = true;
-    }
-
-    if (error) {
+    if (isError) {
+      console.log("error");
+      console.log(errors);
       return;
     } else {
       const sizes = choosenSizes.join(",");
@@ -121,7 +132,7 @@ export const EditingPage: React.FC = () => {
             type: fieldsParams.type,
             photos,
             care: fieldsParams.care,
-            previewPhoto: fieldsParams.previewPhoto,
+            previewPhoto: fieldsParams.previewPhoto[0],
           },
           refetchQueries: [
             {
@@ -131,9 +142,11 @@ export const EditingPage: React.FC = () => {
         })
           .then(() => {
             setCancelSuccess(true);
-            clearServerPhotos();
+            deleteAllPhotosFromServer("clearAll");
           })
-          .catch(() => console.log("error"));
+          .catch((err) => console.log("error cant to send", err));
+      } else {
+        console.log("it will update");
       }
     }
   };
@@ -246,7 +259,10 @@ export const EditingPage: React.FC = () => {
 
             <button
               className="EditingPage__Button EditingPage__Button--cancel"
-              onClick={() => setCancel(true)}
+              onClick={() => {
+                setCancel(true);
+                deleteAllPhotosFromServer("clearAll");
+              }}
             >
               Отмена
             </button>
@@ -258,7 +274,13 @@ export const EditingPage: React.FC = () => {
               <button className="EditingPage__Button EditingPage__Button--add">
                 Сохранить
               </button>
-              <button className="EditingPage__Button EditingPage__Button--delete">
+              <button
+                className="EditingPage__Button EditingPage__Button--delete"
+                onClick={() => {
+                  deletePopupOpen(true, prodId);
+                  setBackgroundCover(true);
+                }}
+              >
                 Удалить товар
               </button>
             </div>
@@ -266,7 +288,7 @@ export const EditingPage: React.FC = () => {
               className="EditingPage__Button EditingPage__Button--cancel EditingPage__Button--cancelN"
               onClick={() => {
                 setCancel(true);
-                clearServerPhotos();
+                deleteAllPhotosFromServer("clearAll");
               }}
             >
               Отмена

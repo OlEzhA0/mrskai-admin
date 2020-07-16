@@ -49,6 +49,7 @@ export const addProductMutation = gql`
       type
       photos
       previewPhoto
+      care
     }
   }
 `;
