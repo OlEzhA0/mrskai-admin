@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./UploadFile.scss";
-import { getPhotos, postData } from "../../helpers";
+import { getPhotos, postData, deleteFromServer } from "../../helpers";
 import cn from "classnames";
 import { SpinnerPhotoLoader } from "../SpinnerPhotoLoader";
 
@@ -36,7 +36,6 @@ export const UploadFile: React.FC<Props> = ({
   const getData = () => {
     setPhotos([]);
     getPhotos().then((photos) => {
-      console.log(photos);
       setPhotos(photos);
     });
   };
@@ -53,7 +52,6 @@ export const UploadFile: React.FC<Props> = ({
           setError(true, name);
           setPhotos([...photos, res]);
           setFile(null);
-          getData();
           setDisabledButton(false);
         },
         (err) => {
@@ -62,7 +60,7 @@ export const UploadFile: React.FC<Props> = ({
         }
       )
       .then(() => {
-        setTimeout(getData, 500);
+        setTimeout(getData, 1000);
       });
   };
 
@@ -75,6 +73,7 @@ export const UploadFile: React.FC<Props> = ({
     setValues("", name);
     setError(true, name);
     setPhotos(photos.filter((photoToDel) => photoToDel !== photo));
+    deleteFromServer(photo);
   };
 
   return (
@@ -141,7 +140,7 @@ export const UploadFile: React.FC<Props> = ({
                     src={photo}
                     alt="model"
                     className="UploadFile__Photo"
-                    onError={() => console.log("error photo")}
+                    onError={getData}
                   />
                   <img
                     src="images/edit/edit.svg"

@@ -16,8 +16,17 @@ export async function postData(formData: any) {
 }
 
 export const getPhotos = async () => {
-  const res = await fetch(`${RELOAD_URL}`);
-  const json = await res.json();
+   const res = await fetch(`${RELOAD_URL}`);
+   const json = await res.json();
 
-  return json;
+   return json;
 }
+
+export const deleteFromServer = async (link: string) => {
+  await fetch(`http://localhost:5000/deletePhoto`, {
+    method: "PUT",
+    body: link,
+  })
+}
+
+

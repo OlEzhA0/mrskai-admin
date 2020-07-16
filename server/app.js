@@ -8,7 +8,8 @@ const { uploadFile } = require('./upload');
 const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 const schema = require('./schema/schema.js');
-const links = [];
+let links = [];
+const bodyParser = require('body-parser');
 const app = express();
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -40,13 +41,18 @@ app.post('/upload', upload.any('uploaded_file'), (req, res) => {
 })
 
 app.get('/takePhotos', (req, res) => {
-  console.log(links);
+  console.log('take');
   res.json(links)
 });
 
-app.get('/clearPhotos', (req, res) => {
+app.put('/clearPhotos', (req, res) => {
   links.length = 0;
 });
+
+app.put('/deletePhoto', bodyParser.text(), (req, res) => {
+  console.log(req.body);
+  links = links.filter(link => req.body !== link);
+})
 
 const dbContection = mongoose.connection;
 dbContection.on('error', err => console.log(`Contection error: ${err}`));

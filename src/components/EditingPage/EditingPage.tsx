@@ -12,6 +12,7 @@ import { EditingSizes } from "../EditingSizes";
 import { EditingColros } from "../EditingColors";
 import { EditingText } from "../EditingText";
 import { addProductMutation } from "../../mutation";
+import { deleteFromServer } from "../../helpers";
 
 export const EditingPage: React.FC = () => {
   const location = useLocation();
@@ -39,7 +40,7 @@ export const EditingPage: React.FC = () => {
   };
 
   useEffect(() => {
-    clearServerPhotos();
+    // clearServerPhotos();
   }, [])
 
   useEffect(() => {
