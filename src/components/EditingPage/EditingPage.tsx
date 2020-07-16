@@ -39,6 +39,10 @@ export const EditingPage: React.FC = () => {
   };
 
   useEffect(() => {
+    clearServerPhotos();
+  }, [])
+
+  useEffect(() => {
     if (!isNewProduct && data && data.product) {
       const {
         title,

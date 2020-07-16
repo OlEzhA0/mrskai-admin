@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./UploadFile.scss";
 import { getPhotos, postData } from "../../helpers";
 import cn from "classnames";
+import { SpinnerPhotoLoader } from "../SpinnerPhotoLoader";
 
 interface Props {
   photos: string[];
@@ -45,22 +46,24 @@ export const UploadFile: React.FC<Props> = ({
     setDisabledButton(true);
     const formData = new FormData();
     formData.set("photo", file!);
-    postData(formData).then(
-      (res) => {
-        setValues("", name);
-        setError(true, name);
-        setPhotos([...photos, res]);
-        setFile(null);
-        getData();
-        setDisabledButton(false);
-      },
-      (err) => {
-        setDisabledButton(false);
-        console.log(err);
-      }
-    ).then(() => {
-      setTimeout(getData, 500);
-    });
+    postData(formData)
+      .then(
+        (res) => {
+          setValues("", name);
+          setError(true, name);
+          setPhotos([...photos, res]);
+          setFile(null);
+          getData();
+          setDisabledButton(false);
+        },
+        (err) => {
+          setDisabledButton(false);
+          console.log(err);
+        }
+      )
+      .then(() => {
+        setTimeout(getData, 500);
+      });
   };
 
   const setPreviewPhoto = (photo: string) => {
@@ -123,26 +126,34 @@ export const UploadFile: React.FC<Props> = ({
           </button>
         </div>
         {photos.length > 0 && (
-          <ul className="UploadFile__List">
-            {photos.map((photo) => (
-              <li
-                key={photo}
-                className={cn({
-                  UploadFile__Item: true,
-                  "UploadFile__Item--preview": previewPhoto === photo,
-                })}
-                onClick={() => setPreviewPhoto(photo)}
-              >
-                <img src={photo} alt="model" className="UploadFile__Photo" />
-                <img
-                  src="images/edit/edit.svg"
-                  alt="delete"
-                  className="UploadFile__Delete"
-                  onClick={() => deletePhotoFromForm(photo)}
-                />
-              </li>
-            ))}
-          </ul>
+          <>
+            <ul className="UploadFile__List">
+              {photos.map((photo) => (
+                <li
+                  key={photo}
+                  className={cn({
+                    UploadFile__Item: true,
+                    "UploadFile__Item--preview": previewPhoto === photo,
+                  })}
+                  onClick={() => setPreviewPhoto(photo)}
+                >
+                  <img src={photo} alt="model" className="UploadFile__Photo" />
+                  <img
+                    src="images/edit/edit.svg"
+                    alt="delete"
+                    className="UploadFile__Delete"
+                    onClick={() => deletePhotoFromForm(photo)}
+                    onError={() => console.log("error photo")}
+                  />
+                </li>
+              ))}
+              {disabledButton && (
+                <li className="UploadFile__Item">
+                  <SpinnerPhotoLoader />
+                </li>
+              )}
+            </ul>
+          </>
         )}
       </div>
     </>

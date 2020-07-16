@@ -18,7 +18,7 @@ ReactDOM.render(
           <App />
         </AppContextWrapper>
       </React.StrictMode>
-    </ApolloProvider>,
+    </ApolloProvider>
   </HashRouter>,
   document.getElementById("root")
 );
