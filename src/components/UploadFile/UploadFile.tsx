@@ -117,11 +117,9 @@ export const UploadFile: React.FC<Props> = ({
             </button>
           </form>
         </div>
-        {photos.length === 0 && (
-          <div className="UploadFile__Stub">
-            <img src="images/edit/emptyPhotos.svg" alt="" />
-          </div>
-        )}
+        <div className="UploadFile__Stub">
+          <img src="images/edit/emptyPhotos.svg" alt="" />
+        </div>
         {photos.length > 0 && (
           <>
             <ul className="UploadFile__List">

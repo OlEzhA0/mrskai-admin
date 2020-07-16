@@ -15,6 +15,7 @@
   &__Wrap {
     width: 60%;
     margin-top: 20px;
+    position: relative;
   }
 
   &__Photo {
@@ -37,6 +38,7 @@
     align-items: center;
     justify-content: center;
     color: #a6a6a6;
+    z-index: -1;
   }
 
   &__Button {
@@ -107,7 +109,9 @@
   &__List {
     display: flex;
     list-style-type: none;
-    margin-top: 20px;
+    // margin-top: 20px;
+    position: absolute;
+    bottom: -4px;
   }
 
   &__Item {

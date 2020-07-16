@@ -91,11 +91,10 @@ export const EditingPage: React.FC = () => {
       price: validation("price"),
       modelParam: validation("modelParam"),
       composition: validation("composition"),
-      lastPrice: validation("lastPrice"),
+      lastPrice: false,
       type: validation("type"),
       care: validation("care"),
-      // previewPhoto: fieldsParams.previewPhoto.length === 0,
-      previewPhoto: false,
+      previewPhoto: fieldsParams.previewPhoto.length === 0,
       sizes: choosenSizes.length === 0,
     };
 
