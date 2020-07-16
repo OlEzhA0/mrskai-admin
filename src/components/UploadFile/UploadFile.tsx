@@ -49,7 +49,7 @@ export const UploadFile: React.FC<Props> = ({
       (res) => {
         setValues("", name);
         setError(true, name);
-        setPhotos([...photos, res]);
+        setPhotos([...res]);
         setFile(null);
         setDisabledButton(false);
       },
@@ -61,7 +61,6 @@ export const UploadFile: React.FC<Props> = ({
   };
 
   const setPreviewPhoto = (photo: string) => {
-    console.log(typeof photo);
     setValues(photo, name);
     setError(false, name);
   };
@@ -101,11 +100,11 @@ export const UploadFile: React.FC<Props> = ({
                   "UploadFile__Custom--success":
                     !previewError && previewPhoto && photos.length,
                 })}
-                data-title={`${
-                  !previewPhoto && photos.length
+                data-title={`${[
+                  photos.length && !previewPhoto
                     ? "Выберите фото для превью или загрузите еще"
-                    : file?.name || "Загрузите ваше фото"
-                }`}
+                    : file?.name || "Загрузите ваше фото",
+                ]}`}
               />
             </label>
             <button
@@ -120,7 +119,7 @@ export const UploadFile: React.FC<Props> = ({
         </div>
         {photos.length === 0 && (
           <div className="UploadFile__Stub">
-            <img src="images/edit/emptyPhotos.svg" alt="empty" />
+            <img src="images/edit/emptyPhotos.svg" alt="" />
           </div>
         )}
         {photos.length > 0 && (
@@ -133,24 +132,19 @@ export const UploadFile: React.FC<Props> = ({
                     UploadFile__Item: true,
                     "UploadFile__Item--preview": previewPhoto === photo,
                   })}
+                  onClick={() => setPreviewPhoto(photo)}
                 >
                   <img
                     src={photo}
                     alt="model"
                     className="UploadFile__Photo"
                     onError={getData}
-                    onClick={() => {
-                      console.log(photo)
-                      setPreviewPhoto(photo);
-                    }}
                   />
                   <img
                     src="images/edit/edit.svg"
                     alt="delete"
                     className="UploadFile__Delete"
-                    onClick={() => {
-                      deletePhotoFromForm(photo);
-                    }}
+                    onClick={() => deletePhotoFromForm(photo)}
                   />
                 </li>
               ))}

@@ -128,7 +128,7 @@ export const EditingPage: React.FC = () => {
   };
 
   const addProd = async (sizes: string) => {
-    console.log(fieldsParams.previewPhoto)
+    console.log(fieldsParams.previewPhoto);
     await addProduct({
       variables: {
         title: fieldsParams.title,
@@ -137,12 +137,12 @@ export const EditingPage: React.FC = () => {
         price: fieldsParams.price,
         modelParam: fieldsParams.modelParam,
         composition: fieldsParams.composition,
-        sizes,
+        sizes: sizes,
         lastPrice: fieldsParams.lastPrice,
         type: fieldsParams.type,
         photos,
         care: fieldsParams.care,
-        previewPhoto: fieldsParams.previewPhoto[0],
+        previewPhoto: fieldsParams.previewPhoto,
       },
       refetchQueries: [
         {
