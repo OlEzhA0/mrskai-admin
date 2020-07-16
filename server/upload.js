@@ -21,7 +21,10 @@ const uploadFile = (fileName, origName) => {
     'x-amz-acl': 'public-read'
   };
 
-  s3.upload(params, (err, data) => {});
+  s3.upload(params, (err, data) => {
+    console.log('err', err);
+    console.log('data', data);
+  });
 
   return `https://mrskai.s3.amazonaws.com/${origName}`;
 };
