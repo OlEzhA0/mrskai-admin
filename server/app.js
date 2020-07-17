@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
-const { uploadFile } = require('./upload');
+const { uploadFile, deleteFile } = require('./upload');
 const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 const schema = require('./schema/schema.js');
@@ -31,17 +31,14 @@ app.use('/graphql', graphqlHTTP({
 
 app.post('/upload', upload.any('uploaded_file'), (req, res) => {
   const result = req.files[0];
-  console.log(result);
   if (!links.some(link => link.includes(result.originalname))) {
     const answerLink = uploadFile(result.path, result.originalname);
     links.push(answerLink);
   }
   res.json(links)
-
 })
 
 app.get('/takePhotos', (req, res) => {
-  console.log('take');
   res.json(links)
 });
 
@@ -51,9 +48,14 @@ app.put('/clearPhotos', bodyParser.text(), (req, res) => {
   }
 });
 
-app.put('/deletePhoto', bodyParser.text(), (req, res) => {
-  console.log(req.body);
-  links = links.filter(link => req.body !== link);
+app.post('/deletePhotoS3', bodyParser.text(), (req, res) => {
+  deleteFile(req.body.split(`https://${process.env.Bucket}.s3.amazonaws.com/`)[1]);
+  links = links.filter(link => link !== req.body);
+  res.json({ status: "success" })
+})
+
+app.put('/loadPhotos', bodyParser.text(), (req, res) => {
+  req.body.split('|').forEach(photo => links.push(photo))
 })
 
 const dbContection = mongoose.connection;

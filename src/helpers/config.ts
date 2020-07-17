@@ -91,30 +91,57 @@ export const SIZES_CONFIG: string[] = [
 export const COLORS = [
   {
     name: "Электрик",
-    hex: '#0094ff'
+    hex: "#0094ff",
   },
   {
     name: "Красный",
-    hex: '#ff2c2c'
+    hex: "#ff2c2c",
   },
   {
     name: "Хаки",
-    hex: '#536100'
+    hex: "#536100",
   },
   {
     name: "Белый",
-    hex: '#ffffff'
+    hex: "#ffffff",
   },
   {
     name: "Темно-синий",
-    hex: '#0046af'
+    hex: "#0046af",
   },
   {
     name: "Мокко",
-    hex: '#ceb59d'
+    hex: "#ceb59d",
   },
   {
     name: "Черный",
-    hex: '#000000'
+    hex: "#000000",
   },
-]
+];
+
+export const DEFAULT_FIELDS_PARAMS = {
+  title: "",
+  descr: "",
+  color: "",
+  price: "",
+  modelParam: "",
+  composition: "",
+  lastPrice: "",
+  type: "",
+  care: "",
+  previewPhoto: "",
+};
+
+export const DEFAULT_FIELDS_ERRORS = {
+  title: false,
+  descr: false,
+  color: false,
+  price: false,
+  modelParam: false,
+  composition: false,
+  lastPrice: false,
+  sizes: false,
+  type: false,
+  care: false,
+  previewPhoto: false,
+};

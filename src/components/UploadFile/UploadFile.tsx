@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./UploadFile.scss";
-import { getPhotos, postData, deleteFromServer } from "../../helpers";
+import { getPhotos, postData, deletePhotoS3 } from "../../helpers";
 import cn from "classnames";
 import { SpinnerPhotoLoader } from "../SpinnerPhotoLoader";
 
@@ -65,11 +65,16 @@ export const UploadFile: React.FC<Props> = ({
     setError(false, name);
   };
 
-  const deletePhotoFromForm = (photo: string) => {
+  const deletePreviewPhoto = () => {
     setValues("", name);
     setError(true, name);
+  };
+
+  const deletePhotoFromForm = async (photo: string) => {
+    setDisabledButton(true);
+    deletePreviewPhoto();
     setPhotos(photos.filter((photoToDel) => photoToDel !== photo));
-    deleteFromServer(photo);
+    await deletePhotoS3(photo).finally(() => setDisabledButton(false));
   };
 
   return (
@@ -100,11 +105,11 @@ export const UploadFile: React.FC<Props> = ({
                   "UploadFile__Custom--success":
                     !previewError && previewPhoto && photos.length,
                 })}
-                data-title={`${[
-                  photos.length && !previewPhoto
+                data-title={`${
+                  photos.length && !previewPhoto && !file?.name
                     ? "Выберите фото для превью или загрузите еще"
-                    : file?.name || "Загрузите ваше фото",
-                ]}`}
+                    : file?.name || "Загрузите ваше фото"
+                }`}
               />
             </label>
             <button
@@ -117,9 +122,11 @@ export const UploadFile: React.FC<Props> = ({
             </button>
           </form>
         </div>
+
         <div className="UploadFile__Stub">
           <img src="images/edit/emptyPhotos.svg" alt="" />
         </div>
+
         {photos.length > 0 && (
           <>
             <ul className="UploadFile__List">
@@ -130,13 +137,13 @@ export const UploadFile: React.FC<Props> = ({
                     UploadFile__Item: true,
                     "UploadFile__Item--preview": previewPhoto === photo,
                   })}
-                  onClick={() => setPreviewPhoto(photo)}
                 >
                   <img
                     src={photo}
                     alt="model"
                     className="UploadFile__Photo"
-                    onError={getData}
+                    onError={() => setTimeout(getData, 500)}
+                    onClick={() => setPreviewPhoto(photo)}
                   />
                   <img
                     src="images/edit/edit.svg"

@@ -109,15 +109,16 @@
   &__List {
     display: flex;
     list-style-type: none;
-    // margin-top: 20px;
     position: absolute;
-    bottom: -4px;
+    bottom: 0;
   }
 
   &__Item {
     margin-right: 15px;
     position: relative;
     cursor: pointer;
+    width: 108px;
+    height: 135px;
 
     &--preview {
       &::after {
@@ -131,7 +132,7 @@
         text-transform: uppercase;
         text-align: center;
         line-height: 22px;
-        bottom: 4px;
+        bottom: 0;
         left: 0;
         font-size: 9px;
         font-weight: bold;
@@ -221,7 +222,7 @@
       z-index: 2;
       display: flex;
       align-items: center;
-      height: 40px;
+      height: 37px;
       padding: 0 1rem;
       font-weight: 300;
       color: #a6a6a6;

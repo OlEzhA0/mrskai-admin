@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./EditingPage.scss";
-import { useLocation, Link, Redirect } from "react-router-dom";
+import { useLocation, Redirect } from "react-router-dom";
 import { useQuery, useMutation } from "react-apollo";
 import { productQuery } from "./query";
 import { EditingInput } from "../EditingInput";
@@ -11,9 +11,18 @@ import { EditingPrices } from "../EditingPrices";
 import { EditingSizes } from "../EditingSizes";
 import { EditingColros } from "../EditingColors";
 import { EditingText } from "../EditingText";
-import { addProductMutation } from "../../mutation";
+import { addProductMutation, updateProductMutation } from "../../mutation";
 import { AppContext } from "../../appContext";
-import { deleteAllPhotosFromServer } from "../../helpers";
+import {
+  deleteAllPhotosFromServer,
+  deletePhotoS3,
+  DEFAULT_FIELDS_ERRORS,
+  DEFAULT_FIELDS_PARAMS,
+  loadPhotos,
+} from "../../helpers";
+import { PopupSuccessNew } from "../PopupSuccessNew";
+import { EditingNewProductButtons } from "../EditingNewProductButtons";
+import { EditingEditProductButtons } from "../EditingEditProductButtons";
 
 export const EditingPage: React.FC = () => {
   const location = useLocation();
@@ -29,14 +38,15 @@ export const EditingPage: React.FC = () => {
     setChoosenSizes,
     setErrorsField,
   } = useContext(EditingContext);
-  const { setBackgroundCover, deletePopupOpen } = useContext(AppContext);
-
+  const { setBackgroundCover } = useContext(AppContext);
   const prodId = location.pathname.split("/").filter((name) => name)[1];
   const { data } = useQuery(productQuery, { variables: { id: prodId } });
   const [photos, setPhotos] = useState<string[]>([]);
   const [addProduct] = useMutation(addProductMutation);
+  const [updateProduct] = useMutation(updateProductMutation);
   const [cancelSuccess, setCancelSuccess] = useState(false);
   const [cancel, setCancel] = useState(false);
+
   useEffect(() => {
     deleteAllPhotosFromServer("clearAll");
 
@@ -79,6 +89,7 @@ export const EditingPage: React.FC = () => {
       setChoosenSizes(newSizes);
       setPhotos(photos);
       setFieldsParams(newParams);
+      loadPhotos(photos);
     }
   }, [data]);
 
@@ -113,21 +124,25 @@ export const EditingPage: React.FC = () => {
 
     if (isError) {
       console.log("error");
-      console.log(errors);
       return;
     } else {
       const sizes = choosenSizes.join(",");
-
+      setBackgroundCover(true);
       if (isNewProduct) {
         addProd(sizes);
       } else {
-        console.log("it will update");
+        updateProd(sizes);
       }
     }
   };
 
+  const handleCancel = () => {
+    photos.forEach((photo) => deletePhotoS3(photo));
+    deleteAllPhotosFromServer("clearAll");
+    setCancel(true);
+  };
+
   const addProd = async (sizes: string) => {
-    console.log(fieldsParams.previewPhoto);
     await addProduct({
       variables: {
         title: fieldsParams.title,
@@ -156,14 +171,68 @@ export const EditingPage: React.FC = () => {
       .catch((err) => console.log("error cant to send", err));
   };
 
+  const updateProd = async (sizes: string) => {
+    setCancelSuccess(true);
+
+    await updateProduct({
+      variables: {
+        id: prodId,
+        title: fieldsParams.title,
+        descr: fieldsParams.descr,
+        color: fieldsParams.color,
+        price: fieldsParams.price,
+        modelParam: fieldsParams.modelParam,
+        composition: fieldsParams.composition,
+        sizes: sizes,
+        lastPrice: fieldsParams.lastPrice,
+        type: fieldsParams.type,
+        photos,
+        care: fieldsParams.care,
+        previewPhoto: fieldsParams.previewPhoto,
+      },
+    })
+      .then(() => {
+        setCancelSuccess(true);
+        deleteAllPhotosFromServer("clearAll");
+      })
+      .catch(() => console.log("err"))
+      .finally(() => console.log("finnaly"));
+  };
+
+  const addMore = () => {
+    setBackgroundCover(false);
+    setCancelSuccess(false);
+    setPhotos([]);
+    setChoosenSizes([]);
+    setErrorsField(DEFAULT_FIELDS_ERRORS);
+    setFieldsParams(DEFAULT_FIELDS_PARAMS);
+  };
+
+  const continueEdit = () => {
+    setBackgroundCover(false);
+    setCancelSuccess(false);
+  };
+
   return (
     <>
       {cancel && <Redirect to="/products" />}
-      {cancelSuccess && (
-        <div className="EditingPage__Success">
-          <p className="EditingPage__SuccessText">Товар добавлен</p>
-          <Link to="/products">Обратно к списку</Link>
-        </div>
+      {isNewProduct && cancelSuccess && (
+        <PopupSuccessNew
+          addMore={addMore}
+          title="Товар успешно добавлен"
+          buttonText="Добавить еще"
+          link="/new"
+        />
+      )}
+      {!isNewProduct && cancelSuccess && (
+        <>
+          <PopupSuccessNew
+            addMore={continueEdit}
+            title="Товар успешно изменен"
+            buttonText="Ок"
+            link={location.pathname}
+          />
+        </>
       )}
       <div className="EditingPage Pages__Wrap">
         <p className="Pages__Title">
@@ -254,51 +323,14 @@ export const EditingPage: React.FC = () => {
           />
         </div>
         {isNewProduct && (
-          <div className="EditingPage__Buttons">
-            <button
-              className="EditingPage__Button EditingPage__Button--add"
-              onClick={isOk}
-            >
-              Добавить
-            </button>
-
-            <button
-              className="EditingPage__Button EditingPage__Button--cancel"
-              onClick={() => {
-                setCancel(true);
-                deleteAllPhotosFromServer("clearAll");
-              }}
-            >
-              Отмена
-            </button>
-          </div>
+          <EditingNewProductButtons isOk={isOk} handleCancel={handleCancel} />
         )}
         {!isNewProduct && (
-          <>
-            <div className="EditingPage__Buttons">
-              <button className="EditingPage__Button EditingPage__Button--add">
-                Сохранить
-              </button>
-              <button
-                className="EditingPage__Button EditingPage__Button--delete"
-                onClick={() => {
-                  deletePopupOpen(true, prodId);
-                  setBackgroundCover(true);
-                }}
-              >
-                Удалить товар
-              </button>
-            </div>
-            <button
-              className="EditingPage__Button EditingPage__Button--cancel EditingPage__Button--cancelN"
-              onClick={() => {
-                setCancel(true);
-                deleteAllPhotosFromServer("clearAll");
-              }}
-            >
-              Отмена
-            </button>
-          </>
+          <EditingEditProductButtons
+            isOk={isOk}
+            prodId={prodId}
+            setCancel={setCancel}
+          />
         )}
       </div>
     </>

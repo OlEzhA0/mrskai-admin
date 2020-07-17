@@ -1,7 +1,7 @@
 import React, { useMemo, useContext, useEffect } from "react";
 import "./ProductsPage.scss";
 import { ProductsPageSettings } from "../ProductsPageSettings";
-import { useMutation, useSubscription } from "react-apollo";
+import { useMutation, useSubscription, useQuery } from "react-apollo";
 import { productsQuery } from "./query";
 import { ProductCard } from "../ProductCard";
 import { LoadSpinner } from "../LoadSpinner";
@@ -17,11 +17,14 @@ export const ProductsPage = () => {
   const { checked, clearAllChecked } = useContext(AppContext);
   const [addCloneProducts] = useMutation(addProductMutation);
   const [deleteChekedProducts] = useMutation(deleteProductMutation);
-  let products: Products[] = [];
 
-  if (data && data.products) {
-    products = data.products;
-  }
+  const products: Products[] = useMemo(() => {
+    if (data && data.products) {
+      return data.products;
+    } else {
+      return [];
+    }
+  }, [data, data && data.products]);
 
   const history = useHistory();
   const location = useLocation();
@@ -54,9 +57,9 @@ export const ProductsPage = () => {
           sizes: clone.sizes,
           lastPrice: clone.lastPrice,
           type: clone.type,
-          photos: clone.photos,
+          photos: [],
           care: clone.care,
-          previewPhoto: clone.previewPhoto,
+          previewPhoto: "",
         },
         refetchQueries: [
           {
@@ -88,9 +91,9 @@ export const ProductsPage = () => {
           sizes: clone.sizes,
           lastPrice: clone.lastPrice,
           type: clone.type,
-          photos: clone.photos,
+          photos: [],
           care: clone.care,
-          previewPhoto: clone.previewPhoto,
+          previewPhoto: "",
         },
         refetchQueries: [
           {
@@ -129,6 +132,7 @@ export const ProductsPage = () => {
 
     return products.filter((product) => product.type === sortByParam);
   }, [sortByParam, products]);
+
 
   return (
     <>

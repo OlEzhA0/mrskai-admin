@@ -24,16 +24,26 @@ export const getPhotos = async () => {
   return json;
 };
 
-export const deleteFromServer = async (link: string) => {
-  await fetch(`${DELETE_URL}`, {
-    method: "PUT",
-    body: link,
-  });
-};
-
 export const deleteAllPhotosFromServer = async (model: string) => {
   await fetch(`${DELETE_ALL}`, {
     method: "PUT",
     body: model,
-  })
-}
+  });
+};
+
+export const deletePhotoS3 = async (photo: string) => {
+  const res = await fetch(`http://localhost:5000/deletePhotoS3`, {
+    method: "POST",
+    body: photo,
+  });
+  const json = await res.json();
+
+  return json;
+};
+
+export const loadPhotos = async (photos: string[]) => {
+  await fetch("http://localhost:5000/loadPhotos", {
+    method: "PUT",
+    body: photos.join('|'),
+  });
+};

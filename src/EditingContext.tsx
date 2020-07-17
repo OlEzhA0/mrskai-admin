@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { DEFAULT_FIELDS_ERRORS, DEFAULT_FIELDS_PARAMS } from "./helpers";
 
 interface Context {
   fieldsParams: FieldsParams;
@@ -14,31 +15,8 @@ interface Context {
 }
 
 export const EditingContext = React.createContext<Context>({
-  fieldsParams: {
-    title: "",
-    descr: "",
-    color: "",
-    price: "",
-    modelParam: "",
-    composition: "",
-    lastPrice: "",
-    type: "",
-    care: "",
-    previewPhoto: "",
-  },
-  errorsField: {
-    title: false,
-    descr: false,
-    color: false,
-    price: false,
-    modelParam: false,
-    composition: false,
-    lastPrice: false,
-    sizes: false,
-    type: false,
-    care: false,
-    previewPhoto: false,
-  },
+  fieldsParams: DEFAULT_FIELDS_PARAMS,
+  errorsField: DEFAULT_FIELDS_ERRORS,
   handleChangeFields: () => {},
   handleError: () => {},
   validation: () => false,
@@ -50,32 +28,13 @@ export const EditingContext = React.createContext<Context>({
 });
 
 export const EditingContextWrapper: React.FC = ({ children }) => {
-  const [fieldsParams, setFieldsParams] = useState<FieldsParams>({
-    title: "",
-    descr: "",
-    color: "",
-    price: "",
-    modelParam: "",
-    composition: "",
-    lastPrice: "",
-    type: "",
-    care: "",
-    previewPhoto: "",
-  });
+  const [fieldsParams, setFieldsParams] = useState<FieldsParams>(
+    DEFAULT_FIELDS_PARAMS
+  );
 
-  const [errorsField, setErrorsField] = useState<ErrorsField>({
-    title: false,
-    descr: false,
-    color: false,
-    price: false,
-    modelParam: false,
-    composition: false,
-    lastPrice: false,
-    sizes: false,
-    type: false,
-    care: false,
-    previewPhoto: false,
-  });
+  const [errorsField, setErrorsField] = useState<ErrorsField>(
+    DEFAULT_FIELDS_ERRORS
+  );
 
   const [choosenSizes, setChoosenSizes] = useState<string[]>([]);
 
@@ -96,7 +55,7 @@ export const EditingContextWrapper: React.FC = ({ children }) => {
   };
 
   const validation = (name: string) => {
-    if (fieldsParams[name].length < 3) {
+    if (fieldsParams[name].length < 2) {
       handleError(true, name);
 
       return true;

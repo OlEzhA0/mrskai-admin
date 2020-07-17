@@ -18,15 +18,26 @@ const uploadFile = (fileName, origName) => {
     Key: origName,
     Body: fileContent,
     ACL: 'public-read-write',
-    'x-amz-acl': 'public-read'
   };
 
-  s3.upload(params, (err, data) => {
-    console.log('err', err);
-    console.log('data', data);
+  s3.putObject(params, (err, data) => {
+    console.log('upload err', err);
+    console.log('upload data', data);
   });
 
-  return `https://mrskai.s3.amazonaws.com/${origName}`;
+  return `https://${BUCKET_NAME}.s3.amazonaws.com/${origName}`;
 };
 
-module.exports = { uploadFile };
+const deleteFile = (fileName) => {
+  const params = {
+    Bucket: BUCKET_NAME,
+    Key: fileName,
+  }
+
+  s3.deleteObject(params, (err, data) => {
+    console.log('delete err', err);
+    console.log('delete data', data);
+  })
+}
+
+module.exports = { uploadFile, deleteFile };

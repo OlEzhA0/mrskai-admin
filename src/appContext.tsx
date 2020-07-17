@@ -32,7 +32,6 @@ export const AppContextWrapper: React.FC = ({ children }) => {
 
   const deletePopupOpen = (status: boolean, id?: string) => {
     setDeletePopup(status);
-    console.log(id);
 
     if (status && id) {
       setCurrentId(id);

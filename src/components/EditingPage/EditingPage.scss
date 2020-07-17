@@ -61,4 +61,63 @@
     display: flex;
     justify-content: space-between;
   }
+
+  &__Success {
+    width: 386px;
+    height: 239px;
+    background-color: #fff;
+    position: fixed;
+    z-index: 20;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    padding: 3rem 2.5rem;
+    box-sizing: border-box;
+  }
+
+  &__SuccessText {
+    font-family: "Cera";
+    font-size: 27px;
+    font-weight: bold;
+    color: #1d1d1d;
+    text-align: center;
+  }
+
+  &__SuccessLinkBlock {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+  }
+
+  &__SuccessButton {
+    width: 9.5rem;
+    height: 49px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 15px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    transition: all 0.3s;
+  }
+
+  &__SuccessBack {
+    background-color: #ebebeb;
+    color: #a6a6a6;
+
+    &:hover {
+      background-color: #f5f3f3;
+    }
+  }
+
+  &__SuccessNew {
+    color: #fff;
+    background-color: #3886f3;
+
+    &:hover {
+      background-color: #5aa1f8;
+    }
+  }
 }

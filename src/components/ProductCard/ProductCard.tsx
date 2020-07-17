@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./ProductCard.scss";
 import { AppContext } from "../../appContext";
 import cn from "classnames";
@@ -34,7 +34,7 @@ export const ProductCard: React.FC<Props> = ({
     setCheckedFn,
     setBackgroundCover,
   } = useContext(AppContext);
-
+  const [preview, setPreview] = useState(previewPhoto);
   return (
     <div className="ProductCard">
       <div className="ProductCard__LeftSide">
@@ -44,7 +44,12 @@ export const ProductCard: React.FC<Props> = ({
           checked={checked.some((checkId) => checkId === id)}
           onChange={() => setCheckedFn(id)}
         />
-        <img src={previewPhoto} alt="preview" className="ProductCard__Photo" />
+        <img
+          src={preview}
+          alt="preview"
+          className="ProductCard__Photo"
+          onError={() => setPreview("images/products/noPhoto.svg")}
+        />
         <div className="ProductCard__Text">
           <p className="ProductCard__Title">{title}</p>
           <p className="ProductCard__Type">{type}</p>
