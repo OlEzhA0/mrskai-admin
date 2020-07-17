@@ -18,13 +18,12 @@ export const useRoutes = (isAuth: boolean) =>
             <Route path="/edit/:id" exact component={EditingPage} />
             <Route path="/new" exact component={EditingPage} />
           </EditingContextWrapper>
-          <Redirect to="/products" />
+          <Redirect to="/" />
         </Switch>
       </div>
     </div>
   ) : (
     <Switch>
       <Route path="/login" exact component={LoginPage} />
-      <Redirect to="/login" />
     </Switch>
   );

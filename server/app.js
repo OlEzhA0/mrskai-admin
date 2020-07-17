@@ -11,7 +11,6 @@ let links = [];
 const bodyParser = require('body-parser');
 const app = express();
 
-app.use(express.json({ extended: true }))
 
 const PORT = process.env.PORT || 5000;
 
@@ -21,7 +20,10 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/auth', require('./routes/login.router'))
+app.use(express.json({ extended: true }))
+
+app.use('/auth', require('./routes/login.router'));
+
 mongoose.connect(process.env.MONGODB_URI ||
   `mongodb+srv://${process.env.MongoLogin}:${process.env.MongoPass}@test.emyio.mongodb.net/products?retryWrites=true&w=majority`,
   { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
@@ -31,7 +33,6 @@ app.use(express.static('build'));
 app.use(cors());
 app.use('/graphql', graphqlHTTP({
   schema,
-  graphiql: true,
 }));
 
 app.post('/upload', upload.any('uploaded_file'), (req, res) => {

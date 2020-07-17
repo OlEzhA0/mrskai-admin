@@ -12,14 +12,7 @@ router.post(
     check('password', 'Минимум 6 символов').isLength({ min: 6 })
   ],
   async (req, res) => {
-    console.log('req', req.body);
     try {
-      const error = validationResult(req);
-
-      if (!error.isEmpty()) {
-        return res.status(400).json({ message: "Некорректные данные при регистрации" })
-      }
-
       const { login, password } = req.body;
 
       const candidate = await User.findOne({ name: login });
@@ -52,15 +45,9 @@ router.post(
   ,
   async (req, res) => {
     try {
-      const error = validationResult(req);
-
-      if (!error.isEmpty()) {
-        return res.status(400).json({ message: "Некорректные данные при регистрации" })
-      }
-
       const { login, password } = req.body;
       const user = await User.findOne({ name: login });
-
+      console.log(user)
       if (!user) {
         return res.status(400).json({ message: "Пользователь не найден" });
       }

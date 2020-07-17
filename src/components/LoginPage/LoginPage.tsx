@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useHttp } from "../../hooks/http.hook";
 import "./LoginPage.scss";
 import { AuthContext } from "../../context/authContext";
+import { useHistory } from "react-router-dom";
 
 export const LoginPage = () => {
   const { login } = useContext(AuthContext);
@@ -10,7 +11,7 @@ export const LoginPage = () => {
   const [loginErr, setLoginErr] = useState(false);
   const [passErr, setPassErr] = useState(false);
   const { loading, error, request } = useHttp();
-
+  const history = useHistory();
   const validation = (name: string, value: string) => {
     if (!value || value.trim().length < 3) {
       switch (name) {
@@ -35,8 +36,14 @@ export const LoginPage = () => {
       const data = await request("/auth/login", "POST", {
         login: log,
         password,
+      }).then((res) => {
+        login(res.token, res.userId);
+      }).then(() => {
+        history.push({
+          pathname: '/products'
+        })
       });
-      login(data.token, data.userId);
+
     } catch (e) {}
   };
 
