@@ -31,7 +31,7 @@ export const useAuth = () => {
       }
     }
     
-  }, [<logi></logi>n]);
+  }, [login]);
 
   return { login, logout, token, userId };
 };
