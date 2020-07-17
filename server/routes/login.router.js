@@ -12,6 +12,7 @@ router.post(
     check('password', 'Минимум 6 символов').isLength({ min: 6 })
   ],
   async (req, res) => {
+    console.log('req', req.body);
     try {
       const error = validationResult(req);
 
@@ -36,7 +37,6 @@ router.post(
       res.status(200).json({ message: 'Пользователь создан' })
 
     } catch (e) {
-      console.log(e)
       console.log(e.message)
       res.status(500).json({ message: "Что-то пошло не так..." })
     }
