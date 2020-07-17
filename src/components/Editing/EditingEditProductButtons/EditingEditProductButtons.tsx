@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./EditingEditProductButtons.scss";
-import { AppContext } from "../../appContext";
-import { deleteAllPhotosFromServer } from "../../helpers";
+import { AppContext } from "../../../appContext";
+import { deleteAllPhotosFromServer } from "../../../helpers";
 
 interface Props {
   isOk: () => void;
@@ -38,7 +38,7 @@ export const EditingEditProductButtons: React.FC<Props> = ({
         className="EditingPage__Button EditingPage__Button--cancel EditingPage__Button--cancelN"
         onClick={() => {
           setCancel(true);
-          deleteAllPhotosFromServer("clearAll");
+          deleteAllPhotosFromServer();
         }}
       >
         Отмена

@@ -1,0 +1,63 @@
+.LoginPage {
+  margin: 161px auto 0;
+  width: 306px;
+  font-family: "Cera";
+
+  &__Title {
+    font-size: 26px;
+    color: #1d1d1d;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &__Form {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  &__Input {
+    border: 1px solid #ebebeb;
+    box-sizing: border-box;
+    border-radius: 10px;
+    height: 49px;
+    margin-bottom: 22px;
+    padding-left: 16px;
+    transition: all 0.3s;
+
+    &::placeholder {
+      font-family: "Roboto", sans-serif;
+      font-size: 15px;
+      color: #a6a6a6;
+    }
+
+    &:focus {
+      border: 1px solid #5aa1f8;
+      outline: 0;
+    }
+  }
+
+  &__Login {
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+    color: #fff;
+    height: 49px;
+    background: #3886f3;
+    border-radius: 10px;
+    border: 0;
+    outline: 0;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin-bottom: 20px;
+
+    &:disabled {
+      background-color: #91c1f8;
+    }
+
+    &:hover {
+      background: #2776e4;
+    }
+  }
+}

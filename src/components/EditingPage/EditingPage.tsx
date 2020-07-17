@@ -1,28 +1,30 @@
-import React, { useState, useEffect, useContext } from "react";
-import "./EditingPage.scss";
-import { useLocation, Redirect } from "react-router-dom";
-import { useQuery, useMutation } from "react-apollo";
-import { productQuery } from "./query";
-import { EditingInput } from "../EditingInput";
-import { EditingContext } from "../../EditingContext";
-import { EditingSelect } from "../EditingSelect";
-import { UploadFile } from "../UploadFile";
-import { EditingPrices } from "../EditingPrices";
-import { EditingSizes } from "../EditingSizes";
-import { EditingColros } from "../EditingColors";
-import { EditingText } from "../EditingText";
-import { addProductMutation, updateProductMutation } from "../../mutation";
+import React, { useContext, useEffect, useState } from "react";
+import { useMutation, useQuery } from "react-apollo";
+import { Redirect, useLocation } from "react-router-dom";
 import { AppContext } from "../../appContext";
+import { EditingContext } from "../../EditingContext";
 import {
-  deleteAllPhotosFromServer,
-  deletePhotoS3,
   DEFAULT_FIELDS_ERRORS,
   DEFAULT_FIELDS_PARAMS,
-  loadPhotos,
+  deleteAllPhotosFromServer,
+  deletePhotoS3,
+  loadPhotos
 } from "../../helpers";
-import { PopupSuccessNew } from "../PopupSuccessNew";
-import { EditingNewProductButtons } from "../EditingNewProductButtons";
-import { EditingEditProductButtons } from "../EditingEditProductButtons";
+import { addProductMutation, updateProductMutation } from "../../mutation";
+import {
+  EditingColros,
+  EditingEditProductButtons,
+  EditingInput,
+  EditingNewProductButtons,
+  EditingPrices,
+  EditingSelect,
+  EditingSizes,
+  EditingText,
+  PopupSuccessNew,
+  UploadFile
+} from "../Editing";
+import "./EditingPage.scss";
+import { productQuery } from "./query";
 
 export const EditingPage: React.FC = () => {
   const location = useLocation();
@@ -48,10 +50,10 @@ export const EditingPage: React.FC = () => {
   const [cancel, setCancel] = useState(false);
 
   useEffect(() => {
-    deleteAllPhotosFromServer("clearAll");
+    deleteAllPhotosFromServer();
 
     return () => {
-      deleteAllPhotosFromServer("clearAll");
+      deleteAllPhotosFromServer();
     };
   }, []);
 
@@ -128,36 +130,35 @@ export const EditingPage: React.FC = () => {
     } else {
       const sizes = choosenSizes.join(",");
       setBackgroundCover(true);
+
       if (isNewProduct) {
-        addProd(sizes);
+        const variables: LocalProduct = {
+          ...fieldsParams,
+          sizes,
+          photos,
+        };
+        addProd(variables);
       } else {
-        updateProd(sizes);
+        const variables: Products = {
+          ...fieldsParams,
+          id: prodId,
+          sizes,
+          photos,
+        };
+        updateProd(variables);
       }
     }
   };
 
   const handleCancel = () => {
     photos.forEach((photo) => deletePhotoS3(photo));
-    deleteAllPhotosFromServer("clearAll");
+    deleteAllPhotosFromServer();
     setCancel(true);
   };
 
-  const addProd = async (sizes: string) => {
+  const addProd = async (variables: LocalProduct) => {
     await addProduct({
-      variables: {
-        title: fieldsParams.title,
-        descr: fieldsParams.descr,
-        color: fieldsParams.color,
-        price: fieldsParams.price,
-        modelParam: fieldsParams.modelParam,
-        composition: fieldsParams.composition,
-        sizes: sizes,
-        lastPrice: fieldsParams.lastPrice,
-        type: fieldsParams.type,
-        photos,
-        care: fieldsParams.care,
-        previewPhoto: fieldsParams.previewPhoto,
-      },
+      variables,
       refetchQueries: [
         {
           query: productQuery,
@@ -166,34 +167,18 @@ export const EditingPage: React.FC = () => {
     })
       .then(() => {
         setCancelSuccess(true);
-        deleteAllPhotosFromServer("clearAll");
+        deleteAllPhotosFromServer();
       })
       .catch((err) => console.log("error cant to send", err));
   };
 
-  const updateProd = async (sizes: string) => {
-    setCancelSuccess(true);
-
+  const updateProd = async (variables: Products) => {
     await updateProduct({
-      variables: {
-        id: prodId,
-        title: fieldsParams.title,
-        descr: fieldsParams.descr,
-        color: fieldsParams.color,
-        price: fieldsParams.price,
-        modelParam: fieldsParams.modelParam,
-        composition: fieldsParams.composition,
-        sizes: sizes,
-        lastPrice: fieldsParams.lastPrice,
-        type: fieldsParams.type,
-        photos,
-        care: fieldsParams.care,
-        previewPhoto: fieldsParams.previewPhoto,
-      },
+      variables,
     })
       .then(() => {
         setCancelSuccess(true);
-        deleteAllPhotosFromServer("clearAll");
+        deleteAllPhotosFromServer();
       })
       .catch(() => console.log("err"))
       .finally(() => console.log("finnaly"));

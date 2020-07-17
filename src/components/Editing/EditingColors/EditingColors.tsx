@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import "./EditingColors.scss";
 import cn from "classnames";
-import { COLORS } from "../../helpers";
+import { COLORS } from "../../../helpers";
 
 interface Props {
   currentColor: string;

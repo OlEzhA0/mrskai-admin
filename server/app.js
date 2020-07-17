@@ -6,20 +6,25 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const { uploadFile, deleteFile } = require('./upload');
 const cors = require('cors');
-const PORT = process.env.PORT || 5000;
 const schema = require('./schema/schema.js');
 let links = [];
 const bodyParser = require('body-parser');
 const app = express();
+
+app.use(express.json({ extended: true }))
+
+const PORT = process.env.PORT || 5000;
+
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.set('Access-Control-Allow-Headers', 'contenttype');
+  res.set('Access-Control-Allow-Headers', 'origin, contenttype, accept');
   next()
 })
 
+app.use('/auth', require('./routes/login.router'))
 mongoose.connect(process.env.MONGODB_URI ||
   `mongodb+srv://${process.env.MongoLogin}:${process.env.MongoPass}@test.emyio.mongodb.net/products?retryWrites=true&w=majority`,
-  { useNewUrlParser: true, useUnifiedTopology: true }
+  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
 )
 
 app.use(express.static('build'));
@@ -43,9 +48,7 @@ app.get('/takePhotos', (req, res) => {
 });
 
 app.put('/clearPhotos', bodyParser.text(), (req, res) => {
-  if (req.body === 'clearAll') {
-    links = [];
-  }
+  links = []
 });
 
 app.post('/deletePhotoS3', bodyParser.text(), (req, res) => {

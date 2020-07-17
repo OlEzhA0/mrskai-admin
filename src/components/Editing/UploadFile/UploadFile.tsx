@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./UploadFile.scss";
-import { getPhotos, postData, deletePhotoS3 } from "../../helpers";
+import { getPhotos, postData, deletePhotoS3 } from "../../../helpers";
 import cn from "classnames";
-import { SpinnerPhotoLoader } from "../SpinnerPhotoLoader";
+import { SpinnerPhotoLoader } from "../../Spinners/SpinnerPhotoLoader";
 
 interface Props {
   photos: string[];

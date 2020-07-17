@@ -26,7 +26,7 @@
     text-transform: uppercase;
     font-size: 13px;
     margin: 40px 0;
-    
+
     font-weight: 300;
     color: $color-main-gray;
   }
@@ -60,13 +60,24 @@
 
   &__Logout {
     margin-top: 40px;
+    display: flex;
+    justify-content: center;
   }
 
   &__LogoutText {
-    text-align: center;
     color: #a6a6a6;
     font-size: 15px;
     font-family: "Roboto", serif;
     cursor: pointer;
+    height: 35px;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    &:hover {
+      background-color: #ebebeb;
+      border-radius: 10px;
+    }
   }
 }

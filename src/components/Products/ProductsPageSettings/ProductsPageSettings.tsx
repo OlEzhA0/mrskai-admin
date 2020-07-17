@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import "./ProductsPageSettings.scss";
 import { Link } from "react-router-dom";
 import { ProductsSelect } from "../ProductsSelect";
-import { typeOptions } from "../../helpers";
-import { AppContext } from "../../appContext";
+import { typeOptions } from "../../../helpers";
+import { AppContext } from "../../../appContext";
 
 interface Props {
   sortBy: string;

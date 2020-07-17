@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./EditingSelect.scss";
 import cn from "classnames";
-import { typeOptions } from "../../helpers";
+import { typeOptions } from "../../../helpers";
 
 interface Props {
   currentValue: string;

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./ProductCard.scss";
-import { AppContext } from "../../appContext";
+import { AppContext } from "../../../appContext";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 interface Props {

@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./SideBar.scss";
 import { ADMIN_PANEL_NAV } from "../../helpers";
 import { AdminNav } from "../AdminNav";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useHistory } from "react-router-dom";
 import cn from "classnames";
+import { AuthContext } from "../../context/authContext";
 
 export const SideBar = () => {
+  const { logout } = useContext(AuthContext);
   const location = useLocation();
+  const history = useHistory();
+
+  const logoutFromSystem = () => {
+    logout();
+    history.push({
+      pathname: "/login",
+    });
+  };
 
   return (
     <div className="SideBar">
@@ -37,7 +47,9 @@ export const SideBar = () => {
         ))}
       </ul>
       <div className="SideBar__Logout">
-        <p className="SideBar__LogoutText">Выйти</p>
+        <p className="SideBar__LogoutText" onClick={logoutFromSystem}>
+          Выйти
+        </p>
       </div>
     </div>
   );

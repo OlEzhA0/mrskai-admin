@@ -1,13 +1,15 @@
-import React, { useMemo, useContext, useEffect } from "react";
-import "./ProductsPage.scss";
-import { ProductsPageSettings } from "../ProductsPageSettings";
-import { useMutation, useSubscription, useQuery } from "react-apollo";
-import { productsQuery } from "./query";
-import { ProductCard } from "../ProductCard";
-import { LoadSpinner } from "../LoadSpinner";
+import React, { useContext, useEffect, useMemo } from "react";
+import { useMutation, useSubscription } from "react-apollo";
+import { useHistory, useLocation } from "react-router-dom";
 import { AppContext } from "../../appContext";
 import { addProductMutation, deleteProductMutation } from "../../mutation";
-import { useLocation, useHistory } from "react-router-dom";
+// import { ProductCard } from "../Products/ProductCard";
+// import { ProductsPageSettings } from "../Products/ProductsPageSettings";
+// import { LoadSpinner } from "../Spinners/LoadSpinner";
+import "./ProductsPage.scss";
+import { productsQuery } from "./query";
+import { ProductsPageSettings, ProductCard } from "../Products";
+import { LoadSpinner } from "../Spinners";
 
 export const ProductsPage = () => {
   const defaultSortBy = "Все товары";
@@ -132,7 +134,6 @@ export const ProductsPage = () => {
 
     return products.filter((product) => product.type === sortByParam);
   }, [sortByParam, products]);
-
 
   return (
     <>

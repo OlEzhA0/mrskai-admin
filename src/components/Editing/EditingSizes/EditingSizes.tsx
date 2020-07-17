@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import "./EditingSizes.scss";
-import { EditingContext } from "../../EditingContext";
+import { EditingContext } from "../../../EditingContext";
 import cn from "classnames";
-import { SIZES_CONFIG } from "../../helpers";
+import { SIZES_CONFIG } from "../../../helpers";
 
 interface Props {
   name: string;

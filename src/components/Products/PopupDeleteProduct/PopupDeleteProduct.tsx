@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import "./PopupDeleteProduct.scss";
-import { AppContext } from "../../appContext";
+import { AppContext } from "../../../appContext";
 import { useMutation, useQuery } from "react-apollo";
-import { deleteProductMutation } from "../../mutation";
-import { productsQuery } from "../ProductsPage/query";
+import { deleteProductMutation } from "../../../mutation";
+import { productsQuery } from "../../ProductsPage/query";
 import { Link, useLocation } from "react-router-dom";
 import { photoProductsToDel } from "./query";
-import { deletePhotoS3 } from "../../helpers";
+import { deletePhotoS3 } from "../../../helpers";
 
 export const PopupDeleteProduct = () => {
   const { setBackgroundCover, deletePopupOpen, currentId } = useContext(

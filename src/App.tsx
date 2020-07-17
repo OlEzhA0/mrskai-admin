@@ -1,40 +1,31 @@
 import React, { useContext } from "react";
-import { Switch, Route } from "react-router-dom";
-import "./styles/index.scss";
-import { SideBar } from "./components/SideBar";
-import { ProductsPage } from "./components/ProductsPage";
 import { AppContext } from "./appContext";
-import { EditingPage } from "./components/EditingPage";
-import { EditingContextWrapper } from "./EditingContext";
-import { PopupDeleteProduct } from "./components/PopupDeleteProduct";
+import { PopupDeleteProduct } from "./components/Products/PopupDeleteProduct";
+import { useRoutes } from "./routes";
+import "./styles/index.scss";
+import { AuthContext } from "./context/authContext";
+import { useAuth } from "./hooks/auth.hook";
 
 const App = () => {
-  const {
-    deletePopup,
-    bachgroundCover,
-  } = useContext(AppContext);
+  const { deletePopup, bachgroundCover } = useContext(AppContext);
+  const { login, logout, token, userId } = useAuth();
+  const isAuthenticated = !!token;
+  const routes = useRoutes(isAuthenticated);
 
   return (
     <>
-      {bachgroundCover && <div className="behind__Background" />}
+      <AuthContext.Provider
+        value={{ login, logout, token, userId, isAuthenticated }}
+      >
+        {bachgroundCover && <div className="behind__Background" />}
 
-      {deletePopup && bachgroundCover && (
-        <>
-          <PopupDeleteProduct />
-        </>
-      )}
-      <div className="wrapper">
-        <SideBar />
-        <div className="App">
-          <Switch>
-            <Route path="/products" exact component={ProductsPage} />
-            <EditingContextWrapper>
-              <Route path="/edit/:id" exact component={EditingPage} />
-              <Route path="/new" exact component={EditingPage} />
-            </EditingContextWrapper>
-          </Switch>
-        </div>
-      </div>
+        {deletePopup && bachgroundCover && (
+          <>
+            <PopupDeleteProduct />
+          </>
+        )}
+        {routes}
+      </AuthContext.Provider>
     </>
   );
 };
