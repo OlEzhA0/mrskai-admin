@@ -18,7 +18,6 @@ export const useRoutes = (isAuth: boolean) =>
             <Route path="/edit/:id" exact component={EditingPage} />
             <Route path="/new" exact component={EditingPage} />
           </EditingContextWrapper>
-          <Route path="/" component={ProductsPage} />
         </Switch>
       </div>
     </div>
