@@ -9,9 +9,12 @@ interface Context {
   validation: (field: string) => boolean;
   setFieldsParams: (params: FieldsParams) => void;
   setSizes: (size: string) => void;
-  choosenSizes: string[];
-  setChoosenSizes: (size: string[]) => void;
+  choosenSizes: Sizes[];
+  setChoosenSizes: (size: Sizes[]) => void;
   setErrorsField: (fields: ErrorsField) => void;
+  changeArticul: (size: string, articul: string) => void;
+  validationChoosenSizesArticul: (size: string) => void;
+  choosenSizesError: string[];
 }
 
 export const EditingContext = React.createContext<Context>({
@@ -25,6 +28,9 @@ export const EditingContext = React.createContext<Context>({
   choosenSizes: [],
   setChoosenSizes: () => {},
   setErrorsField: () => {},
+  changeArticul: () => {},
+  validationChoosenSizesArticul: () => {},
+  choosenSizesError: [],
 });
 
 export const EditingContextWrapper: React.FC = ({ children }) => {
@@ -36,13 +42,48 @@ export const EditingContextWrapper: React.FC = ({ children }) => {
     DEFAULT_FIELDS_ERRORS
   );
 
-  const [choosenSizes, setChoosenSizes] = useState<string[]>([]);
+  const [choosenSizes, setChoosenSizes] = useState<Sizes[]>([]);
+  const [choosenSizesError, setChoosenSizesError] = useState<string[]>([]);
 
   const setSizes = (size: string) => {
-    if (choosenSizes.find((sizes) => sizes === size)) {
-      setChoosenSizes(choosenSizes.filter((sizes) => sizes !== size));
+    if (choosenSizes.find((sizes) => sizes.size === size)) {
+      setChoosenSizes(choosenSizes.filter((sizes) => sizes.size !== size));
+      setChoosenSizesError(
+        choosenSizesError.filter((choosenSize) => choosenSize !== size)
+      );
     } else {
-      setChoosenSizes([...choosenSizes, size]);
+      setChoosenSizes([...choosenSizes, { size, articul: "", stock: "0" }]);
+    }
+  };
+
+  const changeArticul = (modifySize: string, value: string) => {
+    const checkedValue = value.replace(/\D/g, "");
+    setChoosenSizes(
+      choosenSizes.map((choosenSize) => {
+        if (choosenSize.size === modifySize) {
+          return { ...choosenSize, articul: checkedValue };
+        } else {
+          return choosenSize;
+        }
+      })
+    );
+  };
+
+  const validationChoosenSizesArticul = (size: string) => {
+    const articul =
+      choosenSizes.find((choosenSize) => choosenSize.size === size)?.articul ||
+      "";
+
+    if (articul?.trim().length < 5) {
+      if (!choosenSizesError.some((choosenSize) => choosenSize === size)) {
+        setChoosenSizesError([...choosenSizesError, size]);
+      }
+
+      handleError(true, "sizes");
+    } else {
+      setChoosenSizesError(
+        choosenSizesError.filter((choosenSize) => choosenSize !== size)
+      );
     }
   };
 
@@ -77,6 +118,9 @@ export const EditingContextWrapper: React.FC = ({ children }) => {
         setSizes,
         setChoosenSizes,
         setErrorsField,
+        changeArticul,
+        choosenSizesError,
+        validationChoosenSizesArticul,
       }}
     >
       {children}

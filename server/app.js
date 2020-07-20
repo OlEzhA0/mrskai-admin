@@ -24,15 +24,15 @@ app.use(express.json({ extended: true }))
 
 app.use('/auth', require('./routes/login.router'));
 
-mongoose.connect(process.env.MONGODB_URI ||
-  `mongodb+srv://${process.env.MongoLogin}:${process.env.MongoPass}@test.emyio.mongodb.net/products?retryWrites=true&w=majority`,
-  { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+mongoose.connect(`mongodb+srv://admin:NfoSAy2ePnJVQE36@mrskai.g24zh.azure.mongodb.net/database?retryWrites=true&w=majority`,
+  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 )
 
 app.use(express.static('build'));
 app.use(cors());
 app.use('/graphql', graphqlHTTP({
   schema,
+  graphiql: true,
 }));
 
 app.post('/upload', upload.any('uploaded_file'), (req, res) => {
@@ -69,3 +69,21 @@ dbContection.once('open', () => console.log('Connected to DB'))
 app.listen(PORT, err => {
   err ? console.log(err) : console.log('Server started!');
 });
+
+// mutation ($title: String!, $descr: String!, $color: String!, $price: String!, $modelParam: String!, $composition: String!, $sizes: String!, $lastPrice: String!, $type: String!, $photos: [String!], $previewPhoto: String!, $care: String!) {
+//   addProduct(title: $title, descr: $descr, color: $color, price: $price, modelParam: $modelParam, composition: $composition, sizes: $sizes, lastPrice: $lastPrice, type: $type, photos: $photos, previewPhoto: $previewPhoto, care: $care) {
+//     id
+//     title
+//     descr
+//     color
+//     price
+//     modelParam
+//     composition
+//     sizes
+//     lastPrice
+//     care
+//     type
+//     photos
+//     previewPhoto
+//   }
+// }

@@ -1,4 +1,11 @@
 /// <reference types="react-scripts" />
+
+interface Sizes {
+  size: string;
+  articul: string;
+  stock: string;
+}
+
 interface Products {
   id: string;
   title: string;

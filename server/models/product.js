@@ -16,4 +16,4 @@ const commentSchema = new Schema({
   previewPhoto: String,
 });
 
-module.exports = mongoose.model('Comment', commentSchema);
+module.exports = mongoose.model('products', commentSchema);

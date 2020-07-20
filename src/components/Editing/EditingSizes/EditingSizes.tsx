@@ -12,7 +12,13 @@ interface Props {
 
 export const EditingSizes: React.FC<Props> = ({ name, setError, error }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { choosenSizes, setSizes } = useContext(EditingContext);
+  const {
+    choosenSizes,
+    setSizes,
+    changeArticul,
+    validationChoosenSizesArticul,
+    choosenSizesError,
+  } = useContext(EditingContext);
 
   const handleOpenClose = () => {
     if (isOpen && !choosenSizes.length) {
@@ -21,9 +27,15 @@ export const EditingSizes: React.FC<Props> = ({ name, setError, error }) => {
     } else if (!isOpen) {
       setIsOpen(true);
       setError(false, name);
+      choosenSizes.forEach((choosenSize) =>
+        validationChoosenSizesArticul(choosenSize.size)
+      );
     } else {
       setIsOpen(false);
       setError(false, name);
+      choosenSizes.forEach((choosenSize) =>
+        validationChoosenSizesArticul(choosenSize.size)
+      );
     }
   };
 
@@ -32,13 +44,17 @@ export const EditingSizes: React.FC<Props> = ({ name, setError, error }) => {
     setError(false, name);
   };
 
+  const blurValid = (size: string) => {
+    validationChoosenSizesArticul(size);
+  };
+
   return (
     <>
       <div
         className={cn({
           EditingSizes: true,
           "EditingSizes--open": isOpen,
-          "EditingSizes--error": error,
+          "EditingSizes--error": !isOpen && error,
           "EditingSizes--success": !error && choosenSizes.length && !isOpen,
         })}
         onClick={handleOpenClose}
@@ -47,8 +63,8 @@ export const EditingSizes: React.FC<Props> = ({ name, setError, error }) => {
           {choosenSizes.length > 0 ? (
             <span>
               {choosenSizes.map((size) => (
-                <span className="EditingSizes__Sizes" key={size}>
-                  {size},{" "}
+                <span className="EditingSizes__Sizes" key={size.size}>
+                  {size.size},{" "}
                 </span>
               ))}
             </span>
@@ -72,18 +88,44 @@ export const EditingSizes: React.FC<Props> = ({ name, setError, error }) => {
         })}
       >
         {SIZES_CONFIG.map((size) => (
-          <li
-            key={size}
-            className="EditingSizes__OptionItem"
-            onClick={() => handleCheckbox(size)}
-          >
-            {size}
-            <input
-              type="checkbox"
-              checked={choosenSizes.some((sizes) => size === sizes)}
-              onChange={() => handleCheckbox(size)}
-              className="EditingSizes__Checkbox"
-            />
+          <li key={size} className="EditingSizes__OptionItem">
+            <p
+              className="EditingSizes__SizeName"
+              onClick={() => handleCheckbox(size)}
+            >
+              {size}
+            </p>
+            <div className="EditingSizes__Articul">
+              {choosenSizes.some((sizes) => size === sizes.size) && (
+                <input
+                  type="text"
+                  className={cn({
+                    EditingSizes__ArticulInp: true,
+                    "EditingSizes__ArticulInp--success": choosenSizes.find(
+                      (sizes) => sizes.size === size
+                    )?.articul,
+                    "EditingSizes__ArticulInp--error":
+                      !choosenSizes.find((sizes) => sizes.size === size)
+                        ?.articul &&
+                      choosenSizesError.some(
+                        (choosenError) => choosenError === size
+                      ),
+                  })}
+                  placeholder="Артикул"
+                  value={
+                    choosenSizes.find((sizes) => sizes.size === size)?.articul
+                  }
+                  onChange={(e) => changeArticul(size, e.target.value)}
+                  onBlur={() => blurValid(size)}
+                />
+              )}
+              <input
+                type="checkbox"
+                checked={choosenSizes.some((sizes) => size === sizes.size)}
+                onChange={() => handleCheckbox(size)}
+                className="EditingSizes__Checkbox"
+              />
+            </div>
           </li>
         ))}
       </ul>

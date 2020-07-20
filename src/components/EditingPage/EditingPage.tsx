@@ -8,7 +8,7 @@ import {
   DEFAULT_FIELDS_PARAMS,
   deleteAllPhotosFromServer,
   deletePhotoS3,
-  loadPhotos
+  loadPhotos,
 } from "../../helpers";
 import { addProductMutation, updateProductMutation } from "../../mutation";
 import {
@@ -21,10 +21,11 @@ import {
   EditingSizes,
   EditingText,
   PopupSuccessNew,
-  UploadFile
+  UploadFile,
 } from "../Editing";
 import "./EditingPage.scss";
 import { productQuery } from "./query";
+import { ProdSpinner } from "../Spinners";
 
 export const EditingPage: React.FC = () => {
   const location = useLocation();
@@ -40,7 +41,7 @@ export const EditingPage: React.FC = () => {
     setChoosenSizes,
     setErrorsField,
   } = useContext(EditingContext);
-  const { setBackgroundCover } = useContext(AppContext);
+  const { setBackgroundCover, bachgroundCover } = useContext(AppContext);
   const prodId = location.pathname.split("/").filter((name) => name)[1];
   const { data } = useQuery(productQuery, { variables: { id: prodId } });
   const [photos, setPhotos] = useState<string[]>([]);
@@ -87,8 +88,7 @@ export const EditingPage: React.FC = () => {
         previewPhoto,
       };
 
-      const newSizes = sizes.split(",");
-      setChoosenSizes(newSizes);
+      setChoosenSizes(JSON.parse(sizes));
       setPhotos(photos);
       setFieldsParams(newParams);
       loadPhotos(photos);
@@ -128,7 +128,7 @@ export const EditingPage: React.FC = () => {
       console.log("error");
       return;
     } else {
-      const sizes = choosenSizes.join(",");
+      const sizes = JSON.stringify(choosenSizes);
       setBackgroundCover(true);
 
       if (isNewProduct) {
@@ -200,6 +200,9 @@ export const EditingPage: React.FC = () => {
 
   return (
     <>
+      {bachgroundCover && (
+        <ProdSpinner />
+      )}
       {cancel && <Redirect to="/products" />}
       {isNewProduct && cancelSuccess && (
         <PopupSuccessNew

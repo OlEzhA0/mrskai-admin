@@ -8,7 +8,7 @@
   margin-top: 20px;
   line-height: 40px;
   padding: 0 16px;
-  
+
   cursor: pointer;
 
   &--open {
@@ -85,5 +85,47 @@
 
   &__Checkbox {
     cursor: pointer;
+  }
+
+  &__SizeName {
+    flex-grow: 1;
+    height: 100%;
+    line-height: 35px;
+  }
+
+  &__Articul {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__ArticulInp {
+    margin-right: 32px;
+    width: 90px;
+    height: 22px;
+    background: #ffffff;
+    border: 1px solid #ebebeb;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding-left: 16px;
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    outline: 0;
+    transition: all 0.3s;
+
+    &::placeholder {
+      color: #c4c4c4;
+    }
+
+    &:focus {
+      border: 1px solid #5aa1f8;
+    }
+
+    &--success {
+      border: 1px solid #6fcf97;
+    }
+    &--error {
+      border: 1px solid #ff4d42;
+    }
   }
 }

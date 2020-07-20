@@ -3,9 +3,6 @@ import { useMutation, useSubscription } from "react-apollo";
 import { useHistory, useLocation } from "react-router-dom";
 import { AppContext } from "../../appContext";
 import { addProductMutation, deleteProductMutation } from "../../mutation";
-// import { ProductCard } from "../Products/ProductCard";
-// import { ProductsPageSettings } from "../Products/ProductsPageSettings";
-// import { LoadSpinner } from "../Spinners/LoadSpinner";
 import "./ProductsPage.scss";
 import { productsQuery } from "./query";
 import { ProductsPageSettings, ProductCard } from "../Products";
@@ -170,7 +167,9 @@ export const ProductsPage = () => {
             />
           ))}
         {filteredProducts.length === 0 && (
-          <p className="ProductsPage__NoProducts">Нет товаров.</p>
+          <p className="ProductsPage__NoProducts">
+            {loading ? "Загрузка..." : "Нет товаров."}
+          </p>
         )}
       </div>
     </>
