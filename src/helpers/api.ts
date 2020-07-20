@@ -1,7 +1,5 @@
-const URL = process.env.REACT_APP_SERVER || "http://localhost:5000";
 const UPLOAD_URL = process.env.REACT_APP_UPLOAD_FILE;
 const RELOAD_URL = process.env.REACT_APP_RELOAD_FILE;
-const DELETE_URL = process.env.REACT_APP_DELETE_PHOTO;
 const DELETE_ALL = process.env.REACT_APP_CLEAR_PHOTOS;
 
 export async function postData(formData: any) {
@@ -26,7 +24,7 @@ export const getPhotos = async () => {
 
 export const deleteAllPhotosFromServer = async () => {
   await fetch(`${DELETE_ALL}`, {
-    method: "PUT",
+    method: "POST",
   });
 };
 

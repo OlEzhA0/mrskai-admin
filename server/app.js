@@ -48,8 +48,10 @@ app.get('/takePhotos', (req, res) => {
   res.json(links)
 });
 
-app.put('/clearPhotos', bodyParser.text(), (req, res) => {
-  links = []
+app.post('/clearPhotos', (req, res) => {
+  console.log('clear');
+  links = [];
+  res.json({ message: "Success" });
 });
 
 app.post('/deletePhotoS3', bodyParser.text(), (req, res) => {
@@ -60,6 +62,7 @@ app.post('/deletePhotoS3', bodyParser.text(), (req, res) => {
 
 app.put('/loadPhotos', bodyParser.text(), (req, res) => {
   req.body.split('|').forEach(photo => links.push(photo))
+  res.json({ message: "Success" });
 })
 
 const dbContection = mongoose.connection;
