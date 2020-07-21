@@ -23,6 +23,6 @@ export const useRoutes = (isAuth: boolean) =>
     </div>
   ) : (
     <Switch>
-      <Route path="/login" exact component={LoginPage} />
+      <Route path="/" component={LoginPage} />
     </Switch>
   );
