@@ -50,6 +50,10 @@ export const ProductCard: React.FC<Props> = ({
             alt="preview"
             className="ProductCard__Photo"
             onError={() => setPreview("images/products/noPhoto.svg")}
+            style={{
+              width: 50,
+              height: 50,
+            }}
           />
           <div className="ProductCard__Text">
             <p className="ProductCard__Title">{title}</p>

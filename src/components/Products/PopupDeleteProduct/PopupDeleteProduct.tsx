@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import "./PopupDeleteProduct.scss";
 import { AppContext } from "../../../context/appContext";
 import { useMutation, useQuery } from "react-apollo";
 import { deleteProductMutation } from "../../../mutation";
 import { productsQuery } from "../../ProductsPage/query";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { photoProductsToDel } from "./query";
-import { deletePhotoS3 } from "../../../helpers";
+import { deletePhotoS3, sortBy } from "../../../helpers";
 
 export const PopupDeleteProduct = () => {
   const location = useLocation();
+  const history = useHistory();
   const isProductPage = location.pathname.includes("/products");
   const {
     setBackgroundCover,
@@ -25,6 +26,8 @@ export const PopupDeleteProduct = () => {
   const { data } = useQuery(photoProductsToDel, {
     variables: { id: currentId },
   });
+  const searchParams = new URLSearchParams(location.pathname);
+  const sortedBy = useMemo(() => searchParams.get(sortBy), [searchParams]);
 
   const handleDeleteProduct = async () => {
     await deleteProduct({
@@ -46,6 +49,11 @@ export const PopupDeleteProduct = () => {
     });
 
     clearAllChecked();
+
+    history.push({
+      pathname: location.pathname,
+      search: `?sortBy=${sortedBy || "Все товары"}&perPage=10&page=1`,
+    });
   };
 
   return (

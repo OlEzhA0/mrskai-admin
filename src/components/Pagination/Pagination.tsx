@@ -1,7 +1,7 @@
 import React, { useMemo, useContext } from "react";
 import "./Pagination.scss";
 import { useLocation, useHistory, Redirect } from "react-router-dom";
-import { sortBy, productsPerPage, page } from "../../helpers";
+import { sortBy, productsPerPage, page, defaultSortBy } from "../../helpers";
 import { PaginationButton } from "./PaginationButton";
 import { AppContext } from "../../context/appContext";
 
@@ -30,9 +30,9 @@ export const Pagination: React.FC<Props> = ({ qty }) => {
       <Redirect
         to={{
           pathname: location.pathname,
-          search: `?sortBy=${(currentSortBy || "Все товары").split(
-            "+"
-          )}&perPage=${currentPerPage}&page=1`,
+          search: `?sortBy=${
+            currentSortBy || defaultSortBy
+          }&perPage=${currentPerPage}&page=1`,
         }}
       />
     );
@@ -48,7 +48,7 @@ export const Pagination: React.FC<Props> = ({ qty }) => {
         to={{
           pathname: location.pathname,
           search: `?sortBy=${
-            currentSortBy || "Все+товары"
+            currentSortBy || defaultSortBy
           }&perPage=${currentPerPage}&page=${pages.length}`,
         }}
       />

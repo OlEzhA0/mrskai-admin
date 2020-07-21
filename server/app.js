@@ -7,6 +7,9 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 const schema = require('./schema/schema.js');
 const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
+const Products = require('./models/product')
+const btoa = require('btoa')
 const app = express();
 const usersPhotosLinks = {};
 const PORT = process.env.PORT || 5000;
@@ -20,7 +23,82 @@ const {
   deletePhotosS3
 } = require('./photosHandlers');
 
-setInterval(() => console.log('timeout'), 120000)
+const getOrders = async () => {
+  const res = await fetch(
+    "https://online.moysklad.ru/api/remap/1.1/report/stock/all?limit=1000",
+    {
+      headers: {
+        Authorization: `basic ${b64EncodeUnicode(
+          `${process.env.MySkladLogin}:${process.env.MySkladPass}`
+        )}`,
+        header: "X-RateLimit-Remaining",
+      },
+    }
+  );
+
+  const json = (await res.json()).rows;
+
+  return json.map(obj => ({
+    articul: obj.code,
+    stock: obj.stock,
+    price: obj.salePrice.toString().split('').slice(0, -2).join(''),
+  }));
+};
+
+function b64EncodeUnicode(str) {
+  return btoa(
+    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function toSolidBytes(
+      _,
+      p1
+    ) {
+      return String.fromCharCode(+`0x${p1}`);
+    })
+  );
+}
+
+setInterval(() => {
+  Products.find({}).select().exec()
+    .then(async (token) => {
+      await getOrders().then(orders => {
+        for (let i = 0; i < token.length; i++) {
+          const sizes = JSON.parse(token[i].sizes).map(size => {
+            const stock = orders.find(order => order && +order.articul === +size.articul);
+
+            return {
+              size: size.size,
+              articul: size.articul,
+              stock: stock ? `${stock.stock}` : "0",
+            }
+          });
+          const id = token[i]._id;
+
+          if (!(JSON.stringify(sizes) === token[i].sizes)) {
+            Products.findByIdAndUpdate(
+              id,
+              { sizes: JSON.stringify(sizes) },
+              { new: true },
+              (err, user) => {
+
+                if (err) return console.log(err);
+                console.log("Остатки синхронизированы");
+              })
+          }
+
+          if (orders.price && orders.price !== token[i].price) {
+            Products.findByIdAndUpdate(
+              id,
+              { price: orders.price },
+              { new: true },
+              (err, user) => {
+
+                if (err) return console.log(err);
+                console.log("Цены сихронизированы");
+              })
+          }
+        }
+      }).catch(e => console.log(e))
+    });
+}, 120000)
 
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
