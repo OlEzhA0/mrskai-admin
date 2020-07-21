@@ -1,0 +1,48 @@
+.Pagination {
+  margin: 40px 0 100px;
+  display: flex;
+  justify-content: center;
+
+  &__List {
+    list-style-type: none;
+    display: flex;
+  }
+
+  &__Item {
+    border: 0;
+    outline: 0;
+    background-color: #fafafa;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ebebeb;
+    }
+
+    &:disabled {
+      background-color: #fafafa;
+      cursor: default;
+    }
+  }
+
+  &__BtnItem {
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__Dots {
+    color: #a6a6a6;
+    font-size: 15px;
+    line-height: 40px;
+    margin-right: 5px;
+  }
+}

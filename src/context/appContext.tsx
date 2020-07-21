@@ -12,6 +12,7 @@ interface Context {
   setBackgroundCover: (status: boolean) => void;
   userInfo: User;
   setUserInfo: (user: User) => void;
+  setChecked: (IDs: string[]) => void;
 }
 
 const defaultUser = {
@@ -33,6 +34,7 @@ export const AppContext = React.createContext<Context>({
   setBackgroundCover: () => {},
   userInfo: defaultUser,
   setUserInfo: () => {},
+  setChecked: () => {}
 });
 
 export const AppContextWrapper: React.FC = ({ children }) => {
@@ -78,6 +80,7 @@ export const AppContextWrapper: React.FC = ({ children }) => {
         setBackgroundCover,
         userInfo,
         setUserInfo,
+        setChecked,
       }}
     >
       {children}

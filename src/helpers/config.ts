@@ -145,3 +145,13 @@ export const DEFAULT_FIELDS_ERRORS = {
   care: false,
   previewPhoto: false,
 };
+
+export const PER_PAGE = ["10", "20", "30"];
+export const CATEGORY = ["Все товары", ...typeOptions];
+
+export const defaultSortBy = "Все товары";
+export const defaultPage = "1";
+export const defaultPerPage = "10";
+export const sortBy = "sortBy";
+export const page = "page";
+export const productsPerPage = "perPage";

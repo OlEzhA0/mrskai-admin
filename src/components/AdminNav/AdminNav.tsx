@@ -6,11 +6,9 @@ interface Props {
   img: string;
 }
 
-export const AdminNav: React.FC<Props> = ({ name, img }) => {
-  return (
-    <>
-      <img src={img} alt={name} className="AdminNav__Img" />
-      <p className="AdminNav__Name">{name}</p>
-    </>
-  );
-};
+export const AdminNav: React.FC<Props> = ({ name, img }) => (
+  <>
+    <img src={img} alt={name} className="AdminNav__Img" />
+    <p className="AdminNav__Name">{name}</p>
+  </>
+);

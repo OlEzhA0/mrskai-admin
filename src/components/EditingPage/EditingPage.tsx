@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-apollo";
 import { Redirect, useLocation } from "react-router-dom";
 import { AppContext } from "../../context/appContext";
-import { EditingContext } from "../../context/EditingContext";
+import { EditingContext } from "../../context/editingContext";
 import {
   DEFAULT_FIELDS_ERRORS,
   DEFAULT_FIELDS_PARAMS,
   deleteAllPhotosFromServer,
   deletePhotoS3,
-  loadPhotos
+  loadPhotos,
 } from "../../helpers";
 import { addProductMutation, updateProductMutation } from "../../mutation";
 import {
@@ -21,7 +21,7 @@ import {
   EditingSizes,
   EditingText,
   PopupSuccessNew,
-  UploadFile
+  UploadFile,
 } from "../Editing";
 import { ProdSpinner } from "../Spinners";
 import "./EditingPage.scss";
@@ -55,14 +55,14 @@ export const EditingPage: React.FC = () => {
   const [photos, setPhotos] = useState<string[]>([]);
   const [cancelSuccess, setCancelSuccess] = useState(false);
   const [cancel, setCancel] = useState(false);
-  const [timestamp, setTimestamp] = useState('');
+  const [timestamp, setTimestamp] = useState("");
 
   useEffect(() => {
     deleteAllPhotosFromServer(userInfo.id);
     return () => {
       deleteAllPhotosFromServer(userInfo.id);
     };
-  }, []);
+  }, [userInfo.id]);
 
   useEffect(() => {
     if (!isNewProduct && data && data.product) {
@@ -79,7 +79,7 @@ export const EditingPage: React.FC = () => {
         photos,
         previewPhoto,
         care,
-        timestamp
+        timestamp,
       } = data.product;
 
       const newParams = {
@@ -99,9 +99,9 @@ export const EditingPage: React.FC = () => {
       setPhotos(photos);
       setFieldsParams(newParams);
       loadPhotos(photos, userInfo.id);
-      setTimestamp(timestamp)
+      setTimestamp(timestamp);
     }
-  }, [data]);
+  }, [data, isNewProduct, setChoosenSizes, setFieldsParams, userInfo.id]);
 
   const isOk = () => {
     let isError = false;
@@ -144,7 +144,7 @@ export const EditingPage: React.FC = () => {
           ...fieldsParams,
           sizes,
           photos,
-          timestamp: `${new Date().getTime()}`
+          timestamp: `${new Date().getTime()}`,
         };
         addProd(variables);
       } else {

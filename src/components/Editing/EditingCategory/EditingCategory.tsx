@@ -1,11 +1,6 @@
-import React from 'react';
-import './EditingCategory.scss';
+import React from "react";
+import "./EditingCategory.scss";
 
-export const EditingCategory = () => {
-  return (
-    <div className="EditingCategory">
-      EditingCategory
-    </div>
-  );
-};
-
+export const EditingCategory = () => (
+  <div className="EditingCategory">EditingCategory</div>
+);

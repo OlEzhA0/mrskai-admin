@@ -51,7 +51,7 @@ export const SideBar = () => {
       <div className="SideBar__User">
         <img
           src={`images/user/${userInfo.rights}.svg`}
-          alt="user image"
+          alt="user type"
           className="SideBar__UserImg"
         />
         <p className="SideBar__UserType">{userInfo.type}</p>

@@ -1,0 +1,33 @@
+.PaginationButton {
+  font-family: "Roboto", sans-serif;
+  &__Item {
+    display: flex;
+    align-items: center;
+
+    
+  }
+
+  &__Button {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 0;
+    outline: 0;
+    color: #a6a6a6;
+    font-size: 15px;
+    background-color: #fafafa;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 5px;
+
+    &:hover {
+      background-color: #ebebeb;
+    }
+
+    &--active {
+      background-color: #ebebeb;
+    }
+  }
+
+  
+}

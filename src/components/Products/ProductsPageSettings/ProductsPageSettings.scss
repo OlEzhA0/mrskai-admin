@@ -26,7 +26,7 @@
   &__Param {
     font-size: $fz_15;
     color: $color-text-light;
-    
+
     display: flex;
     align-items: center;
     margin-right: 15px;
@@ -45,6 +45,14 @@
 
       &:hover {
         background-color: #fdc5c2;
+      }
+    }
+
+    &--dis {
+      opacity: 0.6;
+      &:hover {
+        cursor: no-drop;
+        background-color: #fafafa;
       }
     }
   }

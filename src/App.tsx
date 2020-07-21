@@ -23,7 +23,7 @@ const App = () => {
     if (data && data.user) {
       setUserInfo(data.user);
     }
-  }, [data && data.user]);
+  }, [data, setUserInfo]);
 
   return (
     <>

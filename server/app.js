@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { graphqlHTTP } = require('express-graphql');
-const { uploadFile, deleteFile } = require('./upload');
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');

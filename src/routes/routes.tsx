@@ -1,7 +1,7 @@
 import React from "react";
 import { SideBar } from "../components/SideBar";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { EditingContextWrapper } from "../context/EditingContext";
+import { EditingContextWrapper } from "../context/editingContext";
 import { ProductsPage } from "../components/ProductsPage";
 import { EditingPage } from "../components/EditingPage";
 import { LoginPage } from "../components/LoginPage";

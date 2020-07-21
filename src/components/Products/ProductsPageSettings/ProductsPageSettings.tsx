@@ -1,35 +1,52 @@
 import React, { useContext } from "react";
-import "./ProductsPageSettings.scss";
 import { Link } from "react-router-dom";
-import { ProductsSelect } from "../ProductsSelect";
-import { typeOptions } from "../../../helpers";
 import { AppContext } from "../../../context/appContext";
+import { CATEGORY, PER_PAGE } from "../../../helpers";
+import { ProductsSelect } from "../ProductsSelect";
+import "./ProductsPageSettings.scss";
+import cn from "classnames";
 
 interface Props {
   sortBy: string;
   productsPerPage: string;
   cloneChecked: () => void;
+  products: Products[];
 }
 
 export const ProductsPageSettings: React.FC<Props> = ({
+  products,
   sortBy,
   productsPerPage,
   cloneChecked,
 }) => {
-  const perPage = ["10", "20", "30", "Все"];
-  const category = ["Все товары", ...typeOptions];
   const {
     checked,
     clearAllChecked,
     setBackgroundCover,
     deletePopupOpen,
+    setChecked,
   } = useContext(AppContext);
+
+  const handleCheckAll = () => {
+    if (checked.length !== products.length) {
+      setChecked(products.map((prod) => prod.id));
+    }
+  };
 
   return (
     <div className="ProductsPageSettings ProdSett">
       <div className="ProdSett__LeftSide">
         {checked.length > 0 ? (
           <div className="ProdSett__CheckedParam">
+            <p
+              className={cn({
+                ProdSett__Param: true,
+                "ProdSett__Param--dis": checked.length === products.length,
+              })}
+              onClick={handleCheckAll}
+            >
+              Выбрать все
+            </p>
             <p className="ProdSett__Param" onClick={clearAllChecked}>
               Сброс
             </p>
@@ -45,7 +62,7 @@ export const ProductsPageSettings: React.FC<Props> = ({
               className="ProdSett__Param ProdSett__Param--delete"
               onClick={() => {
                 setBackgroundCover(true);
-                deletePopupOpen(true, '');
+                deletePopupOpen(true, "");
               }}
             >
               <img
@@ -72,13 +89,13 @@ export const ProductsPageSettings: React.FC<Props> = ({
       <div className="ProdSett__RightSide">
         <ProductsSelect
           mainText="Отображать:"
-          options={perPage}
+          options={PER_PAGE}
           width={80}
           urlType={productsPerPage}
         />
         <ProductsSelect
           mainText="Категория:"
-          options={category}
+          options={CATEGORY}
           width={190}
           urlType={sortBy}
         />

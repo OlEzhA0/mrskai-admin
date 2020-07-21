@@ -2,16 +2,25 @@ import React, { useContext, useEffect, useMemo } from "react";
 import { useMutation, useSubscription } from "react-apollo";
 import { useHistory, useLocation } from "react-router-dom";
 import { AppContext } from "../../context/appContext";
-import { addProductMutation, deleteProductMutation } from "../../mutation";
+import { addProductMutation } from "../../mutation";
+import { ProductCard, ProductsPageSettings } from "../Products";
+import { LoadSpinner } from "../Spinners";
 import "./ProductsPage.scss";
 import { productsQuery } from "./query";
-import { ProductsPageSettings, ProductCard } from "../Products";
-import { LoadSpinner } from "../Spinners";
+import {
+  cloneObject,
+  getTitle,
+  sortBy,
+  productsPerPage,
+  page,
+  defaultSortBy,
+  defaultPerPage,
+  defaultPage,
+} from "../../helpers";
+import { filterProducts } from "../../helpers/filterProducts";
+import { Pagination } from "../Pagination";
 
 export const ProductsPage = () => {
-  const defaultSortBy = "Все товары";
-  const sortBy = "sortBy";
-  const productsPerPage = "ProductsPerPage";
   const { data, loading } = useSubscription(productsQuery);
   const { checked, clearAllChecked } = useContext(AppContext);
   const [addCloneProducts] = useMutation(addProductMutation);
@@ -22,28 +31,31 @@ export const ProductsPage = () => {
     } else {
       return [];
     }
-  }, [data, data && data.products]);
+  }, [data]);
 
   const history = useHistory();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+
   const sortByParam = useMemo(() => searchParams.get(sortBy), [searchParams]);
 
-  const cloneObject = (clone: Products, newTitle: string) => ({
-    title: newTitle,
-    descr: clone.descr,
-    color: clone.color,
-    price: clone.price,
-    modelParam: clone.modelParam,
-    composition: clone.composition,
-    sizes: clone.sizes,
-    lastPrice: clone.lastPrice,
-    type: clone.type,
-    photos: [],
-    care: clone.care,
-    previewPhoto: "",
-    timestamp: clone.timestamp,
-  });
+  const currentPerPage = useMemo(() => searchParams.get(productsPerPage), [
+    searchParams,
+  ]);
+
+  const currentPage = useMemo(() => searchParams.get(page), [searchParams]);
+
+  useEffect(() => {
+    if (!sortByParam && !currentPage && !currentPerPage) {
+      searchParams.set(sortBy, defaultSortBy);
+      searchParams.set(productsPerPage, defaultPerPage);
+      searchParams.set(page, defaultPage);
+
+      history.push({
+        search: searchParams.toString(),
+      });
+    }
+  }, [searchParams, currentPage, currentPerPage, history, sortByParam]);
 
   const cloneChecked = () => {
     if (!checked.length) {
@@ -55,18 +67,10 @@ export const ProductsPage = () => {
     );
 
     toClone.forEach(async (clone) => {
-      let newTitle = clone.title;
-      if (!clone.title.includes("(копия)")) {
-        newTitle += " (копия)";
-      }
+      let newTitle = getTitle(clone.title);
 
       await addCloneProducts({
         variables: cloneObject(clone, newTitle),
-        refetchQueries: [
-          {
-            query: productsQuery,
-          },
-        ],
       });
     });
 
@@ -76,41 +80,44 @@ export const ProductsPage = () => {
   const singleClone = async (id: string) => {
     const clone = products.find((prod) => id === prod.id);
     if (clone) {
-      let newTitle = clone.title;
-      if (!clone.title.includes("(копия)")) {
-        newTitle += " (копия)";
-      }
+      let newTitle = getTitle(clone.title);
 
       await addCloneProducts({
         variables: cloneObject(clone, newTitle),
-        refetchQueries: [
-          {
-            query: productsQuery,
-          },
-        ],
       });
     }
   };
 
-  useEffect(() => {
-    if (!sortByParam) {
-      searchParams.set(sortBy, defaultSortBy);
+  const filteredProducts = useMemo(
+    () => filterProducts(sortByParam as string, defaultSortBy, products),
+    [sortByParam, products]
+  );
+
+  const pagesCount = useMemo(() => {
+    let perPage = currentPerPage || defaultPerPage;
+
+    return Math.ceil(filteredProducts.length / +perPage);
+  }, [filteredProducts, currentPerPage]);
+
+  const visibleProducts = useMemo(() => {
+    const page = currentPage || 1;
+    const perPage = currentPerPage || 10;
+
+    if (currentPerPage && +currentPerPage <= 0) {
+      searchParams.set(productsPerPage, defaultPerPage);
 
       history.push({
         search: searchParams.toString(),
       });
-    }
-  }, [searchParams]);
 
-  const filteredProducts = useMemo(() => {
-    if (sortByParam === defaultSortBy) {
-      return [...products].sort((a, b) => +b.timestamp - +a.timestamp);
+      return filteredProducts.slice(
+        (+page - 1) * +defaultPerPage,
+        +defaultPerPage * +page
+      );
     }
 
-    return products
-      .filter((product) => product.type === sortByParam)
-      .sort((a, b) => +b.timestamp - +a.timestamp);
-  }, [sortByParam, products]);
+    return filteredProducts.slice((+page - 1) * +perPage, +perPage * +page);
+  }, [filteredProducts, currentPage, currentPerPage, history, searchParams]);
 
   return (
     <>
@@ -120,6 +127,7 @@ export const ProductsPage = () => {
           sortBy={sortBy}
           productsPerPage={productsPerPage}
           cloneChecked={cloneChecked}
+          products={visibleProducts}
         />
         {loading && (
           <div className="Spinner">
@@ -127,7 +135,7 @@ export const ProductsPage = () => {
           </div>
         )}
         {!loading &&
-          filteredProducts.map((product) => (
+          visibleProducts.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
@@ -150,6 +158,10 @@ export const ProductsPage = () => {
             {loading ? "Загрузка..." : "Нет товаров."}
           </p>
         )}
+        {currentPage &&
+          currentPerPage &&
+          sortByParam &&
+          filteredProducts.length > 0 && <Pagination qty={pagesCount} />}
       </div>
     </>
   );
