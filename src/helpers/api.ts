@@ -1,7 +1,7 @@
 const UPLOAD_URL = process.env.REACT_APP_UPLOAD_FILE;
 const RELOAD_URL = process.env.REACT_APP_RELOAD_FILE;
 const DELETE_ALL = process.env.REACT_APP_CLEAR_PHOTOS;
-
+const CHECK_PHOTOS = process.env.REACT_APP_CHECK_PHOTOS;
 export async function postData(formData: any) {
   const res = await fetch(`${UPLOAD_URL}`, {
     method: "POST",
@@ -50,7 +50,7 @@ export const loadPhotos = async (photos: string[], id: string) => {
 };
 
 export const checkPhotosFromServer = async (photo: string, id: string) => {
-  const res = await fetch(`http://localhost:5000/checkPhoto`, {
+  const res = await fetch(`${CHECK_PHOTOS}`, {
     method: "POST",
     body: JSON.stringify({ photo, id }),
   });
