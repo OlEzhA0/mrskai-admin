@@ -49,7 +49,7 @@ export const ProductCard: React.FC<Props> = ({
             src={preview}
             alt="preview"
             className="ProductCard__Photo"
-            onError={() => setPreview("images/products/noPhoto.svg")}
+            onError={() => setPreview("images/products/noPhoto.png")}
             style={{
               width: 50,
               height: 50,
