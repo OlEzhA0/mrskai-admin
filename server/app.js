@@ -20,6 +20,8 @@ const {
   deletePhotosS3
 } = require('./photosHandlers');
 
+setInterval(() => console.log('timeout'), 120000)
+
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.set('Access-Control-Allow-Headers', 'origin, contenttype, accept');
