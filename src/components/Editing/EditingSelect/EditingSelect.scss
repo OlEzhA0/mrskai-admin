@@ -1,3 +1,5 @@
+@import "../../../styles/vars.scss";
+
 .EditingSelect {
   margin-top: 20px;
   height: 40px;
@@ -14,12 +16,12 @@
   &__Main {
     width: 60%;
     height: 40px;
-    border: 1px solid #ebebeb;
+    border: 1px solid $color-sys-gray;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     padding: 11px 16px;
-    background-color: #fff;
-    font-family: "Roboto", serif;
+    background-color: $color-background;
+    font-family: $Roboto-ff;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -29,25 +31,25 @@
 
     &--open {
       border-radius: 10px 10px 0 0;
-      border-bottom: 1px solid #fff;
+      border-bottom: 1px solid $color-background;
     }
 
     &--success {
-      border: 1px solid #6fcf97;
+      border: 1px solid $color-success;
     }
 
     &--error {
-      border: 1px solid #ff4d42;
+      border: 1px solid $color-error;
     }
   }
 
   &__MainText {
     height: 18px;
-    font-size: 15px;
+    font-size: $fz_15;
 
     &--default {
-      color: #a6a6a6;
-      font-size: 15px;
+      color: $color-text-light;
+      font-size: $fz_15;
     }
   }
 
@@ -61,9 +63,9 @@
   &__List {
     width: 60%;
     list-style-type: none;
-    background-color: #fff;
-    border: 1px solid #ebebeb;
-    border-top: 1px solid #fff;
+    background-color: $color-background;
+    border: 1px solid $color-sys-gray;
+    border-top: 1px solid $color-background;
     transform: translateY(-30px);
     box-sizing: border-box;
     border-radius: 0 0 10px 10px;
@@ -90,7 +92,7 @@
     transition: all 0.3s;
 
     &:hover {
-      background-color: #ebebeb;
+      background-color: $color-sys-gray;
     }
   }
 }

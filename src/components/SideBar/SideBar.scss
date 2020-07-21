@@ -1,16 +1,18 @@
+@import "../../styles/vars.scss";
+
 .SideBar {
   width: 246px;
   position: fixed;
   height: 100vh;
   padding: 46px 40px 0 0;
   box-sizing: border-box;
-  $color-main-gray: #a6a6a6;
+  $color-main-gray: $color-text-light;
 
   &__PanelLogo {
     width: 188px;
     height: 50px;
-    background: #ebebeb;
-    border-radius: 10px;
+    background: $color-sys-gray;
+    border-radius: $border-radius-default;
     text-align: center;
     line-height: 50px;
     text-transform: uppercase;
@@ -24,7 +26,7 @@
 
   &__Nav {
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: $fz_13;
     margin: 40px 0;
 
     font-weight: 300;
@@ -44,8 +46,8 @@
     transition: all 0.3s;
 
     &:hover {
-      border-radius: 10px;
-      background-color: #ebebeb;
+      border-radius: $border-radius-default;
+      background-color: $color-sys-gray;
     }
   }
 
@@ -54,20 +56,19 @@
   }
 
   &__ActiveNavLink {
-    border-radius: 10px;
-    background-color: #ebebeb;
+    border-radius: $border-radius-default;
+    background-color: $color-sys-gray;
   }
 
   &__Logout {
-    margin-top: 40px;
     display: flex;
     justify-content: center;
   }
 
   &__LogoutText {
-    color: #a6a6a6;
-    font-size: 15px;
-    font-family: "Roboto", serif;
+    color: $color-text-light;
+    font-size: $fz_15;
+    font-family: $Roboto-ff;
     cursor: pointer;
     height: 35px;
     width: 60%;
@@ -76,8 +77,22 @@
     align-items: center;
     transition: all 0.3s;
     &:hover {
-      background-color: #ebebeb;
-      border-radius: 10px;
+      background-color: $color-sys-gray;
+      border-radius: $border-radius-default;
     }
+  }
+
+  &__User {
+    margin: 40px 0 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__UserImg {
+    margin-bottom: 8px;
+    width: 35px;
+    height: 35px;
   }
 }

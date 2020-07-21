@@ -13,9 +13,11 @@ const s3 = new AWS.S3({
 
 const uploadFile = (fileName, origName) => {
   const fileContent = fs.readFileSync(fileName);
+  const uuid = new Date().getTime();
+  const name = `${uuid}` + origName;
   const params = {
     Bucket: BUCKET_NAME,
-    Key: origName,
+    Key: name,
     Body: fileContent,
     ACL: 'public-read-write',
   };
@@ -25,10 +27,11 @@ const uploadFile = (fileName, origName) => {
     console.log('upload data', data);
   });
 
-  return `https://${BUCKET_NAME}.s3.amazonaws.com/${origName}`;
+  return `https://${BUCKET_NAME}.s3.amazonaws.com/${name}`;
 };
 
 const deleteFile = (fileName) => {
+  console.log('file name', fileName);
   const params = {
     Bucket: BUCKET_NAME,
     Key: fileName,

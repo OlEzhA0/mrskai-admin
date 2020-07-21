@@ -1,3 +1,5 @@
+@import "../../../styles/vars.scss";
+
 .ProductsSelect {
   margin-left: 40px;
   display: flex;
@@ -16,8 +18,8 @@
   }
 
   &__Title {
-    color: #a6a6a6;
-    font-size: 15px;
+    color: $color-text-light;
+    font-size: $fz_15;
     
     line-height: 40px;
   }
@@ -30,8 +32,8 @@
     align-items: center;
     padding: 11px 16px;
     box-sizing: border-box;
-    background-color: #ebebeb;
-    border-radius: 10px;
+    background-color: $color-sys-gray;
+    border-radius: $border-radius-default;
     cursor: pointer;
     position: relative;
 
@@ -41,8 +43,8 @@
   }
 
   &__MainText {
-    color: #a6a6a6;
-    font-size: 15px;
+    color: $color-text-light;
+    font-size: $fz_15;
     white-space: nowrap;
   }
 
@@ -60,7 +62,7 @@
     top: 40px;
     position: absolute;
     list-style-type: none;
-    background-color: #ebebeb;
+    background-color: $color-sys-gray;
     border-radius: 0 0 10px 10px;
     padding: 0 0 5px;
     box-sizing: border-box;
@@ -80,8 +82,8 @@
     line-height: 30px;
     padding-left: 16px;
     height: 30px;
-    font-size: 15px;
-    color: #a6a6a6;
+    font-size: $fz_15;
+    color: $color-text-light;
     transition: all 0.3s;
     cursor: pointer;
     &:hover {

@@ -12,6 +12,7 @@ const commentSchema = new Schema({
   sizes: String,
   lastPrice: String,
   type: String,
+  timestamp: String,
   photos: [String],
   previewPhoto: String,
 });

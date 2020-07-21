@@ -1,3 +1,5 @@
+@import "../../../styles/vars.scss";
+
 .UploadFile {
   width: 100%;
   height: 40px;
@@ -21,7 +23,7 @@
   &__Photo {
     width: 108px;
     height: 135px;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     object-fit: cover;
     object-position: center;
   }
@@ -33,21 +35,21 @@
     font-size: 16px;
     white-space: normal;
     background-color: #eeeeeea5;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #a6a6a6;
+    color: $color-text-light;
     z-index: -1;
   }
 
   &__Button {
     width: 160px;
     height: 40px;
-    font-size: 15px;
-    color: #a6a6a6;
-    background-color: #ebebeb;
-    border-radius: 10px;
+    font-size: $fz_15;
+    color: $color-text-light;
+    background-color: $color-sys-gray;
+    border-radius: $border-radius-default;
     border: 0;
     outline: 0;
     cursor: pointer;
@@ -63,7 +65,7 @@
 
     &:disabled {
       opacity: 0.6;
-      background-color: #ebebeb;
+      background-color: $color-sys-gray;
       cursor: no-drop;
     }
   }
@@ -72,11 +74,11 @@
   &__Review {
     height: 41px;
     border: 1px solid #ccc;
-    background-color: #ffffff;
+    background-color: $color-background;
     transition: all 0.3s;
     cursor: pointer;
     &:hover {
-      color: #fff;
+      color: $color-background;
       background-color: #000;
       border: 1px solid #000;
     }
@@ -126,9 +128,9 @@
         position: absolute;
         width: 100%;
         height: 22px;
-        background-color: #3886f3;
+        background-color: $color-primary;
         border-radius: 0 0 10px 10px;
-        color: #fff;
+        color: $color-background;
         text-transform: uppercase;
         text-align: center;
         line-height: 22px;
@@ -158,7 +160,7 @@
     right: -10px;
     width: 10px;
     height: 10px;
-    font-size: 13px;
+    font-size: $fz_13;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -169,7 +171,7 @@
   }
 
   &__OptionLoad {
-    background-color: #fff;
+    background-color: $color-background;
     border: 1px solid black;
     height: 40px;
     line-height: 40px;
@@ -182,7 +184,7 @@
 
     &:hover {
       background-color: #000;
-      color: #fff;
+      color: $color-background;
     }
   }
 
@@ -197,20 +199,20 @@
     align-items: center;
     padding: 0 1rem;
     color: rgb(235, 229, 229);
-    background-color: #fff;
-    border: 1px solid #ebebeb;
+    background-color: $color-background;
+    border: 1px solid $color-sys-gray;
     box-sizing: border-box;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     transition: all 0.3s;
 
     &--error {
-      border: 1px solid #ff4d42;
+      border: 1px solid $color-error;
       box-sizing: border-box;
     }
 
     &--success {
-      border: 1px solid #6fcf97;
+      border: 1px solid $color-success;
       box-sizing: border-box;
     }
 
@@ -225,8 +227,8 @@
       height: 37px;
       padding: 0 1rem;
       font-weight: 300;
-      color: #a6a6a6;
-      background-color: #ebebeb;
+      color: $color-text-light;
+      background-color: $color-sys-gray;
       box-sizing: border-box;
       transition: all 0.3s;
       border-radius: 9px;

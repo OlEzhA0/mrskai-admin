@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./EditingText.scss";
 import cn from "classnames";
-import { EditingContext } from "../../../EditingContext";
+import { EditingContext } from "../../../context/EditingContext";
 
 interface Props {
   placeholder: string;

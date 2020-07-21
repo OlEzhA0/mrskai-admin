@@ -5,9 +5,11 @@ import { AdminNav } from "../AdminNav";
 import { NavLink, useLocation, useHistory } from "react-router-dom";
 import cn from "classnames";
 import { AuthContext } from "../../context/authContext";
+import { AppContext } from "../../context/appContext";
 
 export const SideBar = () => {
   const { logout } = useContext(AuthContext);
+  const { userInfo } = useContext(AppContext);
   const location = useLocation();
   const history = useHistory();
 
@@ -46,6 +48,14 @@ export const SideBar = () => {
           </NavLink>
         ))}
       </ul>
+      <div className="SideBar__User">
+        <img
+          src={`images/user/${userInfo.rights}.svg`}
+          alt="user image"
+          className="SideBar__UserImg"
+        />
+        <p className="SideBar__UserType">{userInfo.type}</p>
+      </div>
       <div className="SideBar__Logout">
         <p className="SideBar__LogoutText" onClick={logoutFromSystem}>
           Выйти

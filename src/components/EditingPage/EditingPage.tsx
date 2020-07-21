@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-apollo";
 import { Redirect, useLocation } from "react-router-dom";
-import { AppContext } from "../../appContext";
-import { EditingContext } from "../../EditingContext";
+import { AppContext } from "../../context/appContext";
+import { EditingContext } from "../../context/EditingContext";
 import {
   DEFAULT_FIELDS_ERRORS,
   DEFAULT_FIELDS_PARAMS,
   deleteAllPhotosFromServer,
   deletePhotoS3,
-  loadPhotos,
+  loadPhotos
 } from "../../helpers";
 import { addProductMutation, updateProductMutation } from "../../mutation";
 import {
@@ -21,15 +21,13 @@ import {
   EditingSizes,
   EditingText,
   PopupSuccessNew,
-  UploadFile,
+  UploadFile
 } from "../Editing";
+import { ProdSpinner } from "../Spinners";
 import "./EditingPage.scss";
 import { productQuery } from "./query";
-import { ProdSpinner } from "../Spinners";
 
 export const EditingPage: React.FC = () => {
-  const location = useLocation();
-  const isNewProduct = location.pathname.startsWith("/new");
   const {
     fieldsParams,
     errorsField,
@@ -41,20 +39,28 @@ export const EditingPage: React.FC = () => {
     setChoosenSizes,
     setErrorsField,
   } = useContext(EditingContext);
-  const { setBackgroundCover, bachgroundCover } = useContext(AppContext);
+
+  const { setBackgroundCover, bachgroundCover, userInfo } = useContext(
+    AppContext
+  );
+
+  const location = useLocation();
+  const isNewProduct = location.pathname.startsWith("/new");
   const prodId = location.pathname.split("/").filter((name) => name)[1];
+
   const { data } = useQuery(productQuery, { variables: { id: prodId } });
-  const [photos, setPhotos] = useState<string[]>([]);
   const [addProduct] = useMutation(addProductMutation);
   const [updateProduct] = useMutation(updateProductMutation);
+
+  const [photos, setPhotos] = useState<string[]>([]);
   const [cancelSuccess, setCancelSuccess] = useState(false);
   const [cancel, setCancel] = useState(false);
+  const [timestamp, setTimestamp] = useState('');
 
   useEffect(() => {
-    deleteAllPhotosFromServer();
-
+    deleteAllPhotosFromServer(userInfo.id);
     return () => {
-      deleteAllPhotosFromServer();
+      deleteAllPhotosFromServer(userInfo.id);
     };
   }, []);
 
@@ -73,6 +79,7 @@ export const EditingPage: React.FC = () => {
         photos,
         previewPhoto,
         care,
+        timestamp
       } = data.product;
 
       const newParams = {
@@ -91,7 +98,8 @@ export const EditingPage: React.FC = () => {
       setChoosenSizes(JSON.parse(sizes));
       setPhotos(photos);
       setFieldsParams(newParams);
-      loadPhotos(photos);
+      loadPhotos(photos, userInfo.id);
+      setTimestamp(timestamp)
     }
   }, [data]);
 
@@ -136,6 +144,7 @@ export const EditingPage: React.FC = () => {
           ...fieldsParams,
           sizes,
           photos,
+          timestamp: `${new Date().getTime()}`
         };
         addProd(variables);
       } else {
@@ -144,6 +153,7 @@ export const EditingPage: React.FC = () => {
           id: prodId,
           sizes,
           photos,
+          timestamp,
         };
         updateProd(variables);
       }
@@ -151,8 +161,8 @@ export const EditingPage: React.FC = () => {
   };
 
   const handleCancel = () => {
-    photos.forEach((photo) => deletePhotoS3(photo));
-    deleteAllPhotosFromServer();
+    photos.forEach((photo) => deletePhotoS3(photo, userInfo.id));
+    deleteAllPhotosFromServer(userInfo.id);
     setCancel(true);
   };
 
@@ -167,7 +177,7 @@ export const EditingPage: React.FC = () => {
     })
       .then(() => {
         setCancelSuccess(true);
-        deleteAllPhotosFromServer();
+        deleteAllPhotosFromServer(userInfo.id);
       })
       .catch((err) => console.log("error cant to send", err));
   };
@@ -178,7 +188,7 @@ export const EditingPage: React.FC = () => {
     })
       .then(() => {
         setCancelSuccess(true);
-        deleteAllPhotosFromServer();
+        deleteAllPhotosFromServer(userInfo.id);
       })
       .catch(() => console.log("err"))
       .finally(() => console.log("finnaly"));
@@ -200,9 +210,7 @@ export const EditingPage: React.FC = () => {
 
   return (
     <>
-      {bachgroundCover && (
-        <ProdSpinner />
-      )}
+      {bachgroundCover && <ProdSpinner />}
       {cancel && <Redirect to="/products" />}
       {isNewProduct && cancelSuccess && (
         <PopupSuccessNew

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./ProductCard.scss";
-import { AppContext } from "../../../appContext";
+import { AppContext } from "../../../context/appContext";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 interface Props {
@@ -44,16 +44,18 @@ export const ProductCard: React.FC<Props> = ({
           checked={checked.some((checkId) => checkId === id)}
           onChange={() => setCheckedFn(id)}
         />
-        <img
-          src={preview}
-          alt="preview"
-          className="ProductCard__Photo"
-          onError={() => setPreview("images/products/noPhoto.svg")}
-        />
-        <div className="ProductCard__Text">
-          <p className="ProductCard__Title">{title}</p>
-          <p className="ProductCard__Type">{type}</p>
-        </div>
+        <Link className="ProductCard__LeftSideInfo" to={`/edit/${id}`} >
+          <img
+            src={preview}
+            alt="preview"
+            className="ProductCard__Photo"
+            onError={() => setPreview("images/products/noPhoto.svg")}
+          />
+          <div className="ProductCard__Text">
+            <p className="ProductCard__Title">{title}</p>
+            <p className="ProductCard__Type">{type}</p>
+          </div>
+        </Link>
       </div>
       <div className="ProductCard__RightSide">
         <div className="ProductCard__Prices">

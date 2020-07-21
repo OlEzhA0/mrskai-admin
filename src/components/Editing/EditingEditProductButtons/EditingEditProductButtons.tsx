@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import "./EditingEditProductButtons.scss";
-import { AppContext } from "../../../appContext";
+import { AppContext } from "../../../context/appContext";
 import { deleteAllPhotosFromServer } from "../../../helpers";
 
 interface Props {
@@ -14,7 +14,9 @@ export const EditingEditProductButtons: React.FC<Props> = ({
   prodId,
   setCancel,
 }) => {
-  const { deletePopupOpen, setBackgroundCover } = useContext(AppContext);
+  const { deletePopupOpen, setBackgroundCover, userInfo } = useContext(
+    AppContext
+  );
   return (
     <>
       <div className="EditingPage__Buttons">
@@ -38,7 +40,7 @@ export const EditingEditProductButtons: React.FC<Props> = ({
         className="EditingPage__Button EditingPage__Button--cancel EditingPage__Button--cancelN"
         onClick={() => {
           setCancel(true);
-          deleteAllPhotosFromServer();
+          deleteAllPhotosFromServer(userInfo.id);
         }}
       >
         Отмена

@@ -1,9 +1,11 @@
+@import "../../../styles/vars.scss";
+
 .EditingSizes {
   width: 60%;
-  background: #ffffff;
-  border: 1px solid #ebebeb;
+  background: $color-background;
+  border: 1px solid $color-sys-gray;
   box-sizing: border-box;
-  border-radius: 10px;
+  border-radius: $border-radius-default;
   height: 40px;
   margin-top: 20px;
   line-height: 40px;
@@ -17,21 +19,21 @@
   }
 
   &--error {
-    border: 1px solid #ff4d42;
+    border: 1px solid $color-error;
   }
 
   &--success {
-    border: 1px solid #6fcf97;
+    border: 1px solid $color-success;
   }
 
   &__Sizes {
-    font-size: 15px;
-    color: #1d1d1d;
+    font-size: $fz_15;
+    color: $color-text;
   }
 
   &__DefaultTitle {
-    color: #a6a6a6;
-    font-size: 15px;
+    color: $color-text-light;
+    font-size: $fz_15;
     font-weight: 300;
   }
 
@@ -42,8 +44,8 @@
 
   &__OptionList {
     width: 60%;
-    background-color: #fff;
-    border: 1px solid #ebebeb;
+    background-color: $color-background;
+    border: 1px solid $color-sys-gray;
     padding-bottom: 5px;
     border-radius: 0 0 10px 10px;
     box-sizing: border-box;
@@ -79,7 +81,7 @@
     transition: all 0.3s;
     cursor: pointer;
     &:hover {
-      background-color: #ebebeb;
+      background-color: $color-sys-gray;
     }
   }
 
@@ -103,12 +105,12 @@
     margin-right: 32px;
     width: 90px;
     height: 22px;
-    background: #ffffff;
-    border: 1px solid #ebebeb;
+    background: $color-background;
+    border: 1px solid $color-sys-gray;
     box-sizing: border-box;
     border-radius: 5px;
     padding-left: 16px;
-    font-family: "Roboto", sans-serif;
+    font-family: $Roboto-ff;
     font-size: 12px;
     outline: 0;
     transition: all 0.3s;
@@ -118,14 +120,14 @@
     }
 
     &:focus {
-      border: 1px solid #5aa1f8;
+      border: 1px solid $color-client;
     }
 
     &--success {
-      border: 1px solid #6fcf97;
+      border: 1px solid $color-success;
     }
     &--error {
-      border: 1px solid #ff4d42;
+      border: 1px solid $color-error;
     }
   }
 }

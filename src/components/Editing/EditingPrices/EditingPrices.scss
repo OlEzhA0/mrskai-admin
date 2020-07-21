@@ -1,3 +1,5 @@
+@import "../../../styles/vars.scss";
+
 .EditingPrices {
   margin-top: 20px;
   width: 60%;
@@ -11,28 +13,28 @@
     width: 48%;
     border: 0;
     outline: 0;
-    background: #ffffff;
-    border: 1px solid #ebebeb;
+    background: $color-background;
+    border: 1px solid $color-sys-gray;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     padding: 0 16px;
     transition: all 0.3s;
   
     &::placeholder {
-      font-size: 15px;
+      font-size: $fz_15;
       color: #c4c4c4;
     }
 
     &:focus {
-      border: 1px solid #5aa1f8;
+      border: 1px solid $color-client;
     }
 
     &--error {
-      border: 1px solid #FF4D42;
+      border: 1px solid $color-error;
     }
 
     &--success {
-      border: 1px solid #6FCF97;
+      border: 1px solid $color-success;
     }
   }
 }

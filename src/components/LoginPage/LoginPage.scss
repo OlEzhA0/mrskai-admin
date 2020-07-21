@@ -1,3 +1,5 @@
+@import "../../styles/vars.scss";
+
 .LoginPage {
   margin: 161px auto 0;
   width: 306px;
@@ -5,7 +7,7 @@
 
   &__Title {
     font-size: 26px;
-    color: #1d1d1d;
+    color: $color-text;
     font-weight: bold;
     text-align: center;
   }
@@ -18,33 +20,37 @@
   }
 
   &__Input {
-    border: 1px solid #ebebeb;
+    border: 1px solid $color-sys-gray;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     height: 49px;
     margin-bottom: 22px;
     padding-left: 16px;
     transition: all 0.3s;
 
     &::placeholder {
-      font-family: "Roboto", sans-serif;
-      font-size: 15px;
-      color: #a6a6a6;
+      font-family: $Roboto-ff;
+      font-size: $fz_15;
+      color: $color-text-light;
     }
 
     &:focus {
-      border: 1px solid #5aa1f8;
+      border: 1px solid $color-client;
       outline: 0;
+    }
+
+    &--error {
+      border: 1px solid $color-error;
     }
   }
 
   &__Login {
-    font-family: "Roboto", sans-serif;
-    font-size: 15px;
-    color: #fff;
+    font-family: $Roboto-ff;
+    font-size: $fz_15;
+    color: $color-background;
     height: 49px;
-    background: #3886f3;
-    border-radius: 10px;
+    background: $color-primary;
+    border-radius: $border-radius-default;
     border: 0;
     outline: 0;
     text-transform: uppercase;
@@ -52,12 +58,28 @@
     cursor: pointer;
     margin-bottom: 20px;
 
-    &:disabled {
-      background-color: #91c1f8;
-    }
-
     &:hover {
       background: #2776e4;
     }
+
+    &:disabled {
+      background-color: #91c1f8;
+      cursor: no-drop;
+    }
+  }
+
+  &__Error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $Roboto-ff;
+    font-size: $fz_15;
+    color: $color-error;
+  }
+
+  &__ErrorImg {
+    width: $fz_15;
+    height: $fz_15;
+    margin-right: 8px;
   }
 }

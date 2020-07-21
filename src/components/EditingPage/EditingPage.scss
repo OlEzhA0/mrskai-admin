@@ -1,3 +1,5 @@
+@import "../../styles/vars.scss";
+
 .EditingPage {
   margin-bottom: 100px;
 
@@ -9,16 +11,16 @@
     width: 47%;
     height: 49px;
     text-transform: uppercase;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     border: 0;
     outline: 0;
     cursor: pointer;
-    font-size: 15px;
+    font-size: $fz_15;
     transition: all 0.3s;
 
     &--add {
       background-color: #2275e9;
-      color: #fff;
+      color: $color-background;
 
       &:hover {
         background-color: #1a62c7;
@@ -26,8 +28,8 @@
     }
 
     &--cancel {
-      background-color: #ebebeb;
-      color: #a6a6a6;
+      background-color: $color-sys-gray;
+      color: $color-text-light;
 
       &:hover {
         background-color: #d8d4d4;
@@ -35,8 +37,8 @@
     }
 
     &--delete {
-      background-color: #ff4d42;
-      color: #fff;
+      background-color: $color-error;
+      color: $color-background;
 
       &:hover {
         background-color: #cf3229;
@@ -44,8 +46,8 @@
     }
 
     &--cancelN {
-      background-color: #ebebeb;
-      color: #a6a6a6;
+      background-color: $color-sys-gray;
+      color: $color-text-light;
       width: 60%;
       margin-top: 16px;
 
@@ -65,13 +67,13 @@
   &__Success {
     width: 386px;
     height: 239px;
-    background-color: #fff;
+    background-color: $color-background;
     position: fixed;
     z-index: 20;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     padding: 3rem 2.5rem;
     box-sizing: border-box;
   }
@@ -80,7 +82,7 @@
     font-family: "Cera";
     font-size: 27px;
     font-weight: bold;
-    color: #1d1d1d;
+    color: $color-text;
     text-align: center;
   }
 
@@ -97,15 +99,15 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    font-size: 15px;
+    font-size: $fz_15;
     text-transform: uppercase;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
     transition: all 0.3s;
   }
 
   &__SuccessBack {
-    background-color: #ebebeb;
-    color: #a6a6a6;
+    background-color: $color-sys-gray;
+    color: $color-text-light;
 
     &:hover {
       background-color: #f5f3f3;
@@ -113,11 +115,11 @@
   }
 
   &__SuccessNew {
-    color: #fff;
-    background-color: #3886f3;
+    color: $color-background;
+    background-color: $color-primary;
 
     &:hover {
-      background-color: #5aa1f8;
+      background-color: $color-client;
     }
   }
 }

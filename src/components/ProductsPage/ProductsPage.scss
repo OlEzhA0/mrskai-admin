@@ -1,8 +1,10 @@
+@import "../../styles/vars.scss";
+
 .ProductsPage {
 
   &__NoProducts {
     text-align: center;
-    color: #a6a6a6;
+    color: $color-text-light;
   }
 }
 

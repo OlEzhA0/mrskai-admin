@@ -29,6 +29,7 @@ const ProductType = new GraphQLObjectType({
     type: { type: GraphQLString },
     photos: { type: new GraphQLList(GraphQLString) },
     previewPhoto: { type: GraphQLString },
+    timestamp: { type: GraphQLString },
   }),
 });
 
@@ -60,7 +61,8 @@ const Mutation = new GraphQLObjectType({
         type: { type: new GraphQLNonNull(GraphQLString) },
         photos: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
         previewPhoto: { type: new GraphQLNonNull(GraphQLString) },
-        care: { type: new GraphQLNonNull(GraphQLString) }
+        care: { type: new GraphQLNonNull(GraphQLString) },
+        timestamp: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, {
         title,
@@ -75,6 +77,7 @@ const Mutation = new GraphQLObjectType({
         photos,
         care,
         previewPhoto,
+        timestamp
       }) {
         const comment = new Product({
           title,
@@ -89,6 +92,7 @@ const Mutation = new GraphQLObjectType({
           care,
           photos,
           previewPhoto,
+          timestamp,
         });
 
         return comment.save();
@@ -116,7 +120,9 @@ const Mutation = new GraphQLObjectType({
         type: { type: new GraphQLNonNull(GraphQLString) },
         photos: { type: new GraphQLList(new GraphQLNonNull(GraphQLString)) },
         previewPhoto: { type: new GraphQLNonNull(GraphQLString) },
-        care: { type: new GraphQLNonNull(GraphQLString) }
+        care: { type: new GraphQLNonNull(GraphQLString) },
+        timestamp: { type: new GraphQLNonNull(GraphQLString) },
+
       },
       resolve(parent, {
         id,
@@ -131,7 +137,9 @@ const Mutation = new GraphQLObjectType({
         type,
         photos,
         care,
-        previewPhoto }) {
+        previewPhoto,
+        timestamp,
+       }) {
         return Product.findByIdAndUpdate(id,
           {
             $set: {
@@ -146,7 +154,8 @@ const Mutation = new GraphQLObjectType({
               type,
               photos,
               care,
-              previewPhoto
+              previewPhoto,
+              timestamp,
             }
           }, { new: true }
         );

@@ -10,7 +10,16 @@ interface Context {
   clearAllChecked: () => void;
   bachgroundCover: boolean;
   setBackgroundCover: (status: boolean) => void;
+  userInfo: User;
+  setUserInfo: (user: User) => void;
 }
+
+const defaultUser = {
+  id: "",
+  name: "",
+  rights: "",
+  type: "",
+};
 
 export const AppContext = React.createContext<Context>({
   deletePopup: false,
@@ -22,6 +31,8 @@ export const AppContext = React.createContext<Context>({
   clearAllChecked: () => {},
   bachgroundCover: false,
   setBackgroundCover: () => {},
+  userInfo: defaultUser,
+  setUserInfo: () => {},
 });
 
 export const AppContextWrapper: React.FC = ({ children }) => {
@@ -29,6 +40,7 @@ export const AppContextWrapper: React.FC = ({ children }) => {
   const [currentId, setCurrentId] = useState("");
   const [checked, setChecked] = useState<string[]>([]);
   const [bachgroundCover, setBackgroundCover] = useState(false);
+  const [userInfo, setUserInfo] = useState<User>(defaultUser);
 
   const deletePopupOpen = (status: boolean, id?: string) => {
     setDeletePopup(status);
@@ -41,16 +53,16 @@ export const AppContextWrapper: React.FC = ({ children }) => {
   };
 
   const setCheckedFn = (id: string) => {
-    if (checked.find(checkId => checkId === id)) {
-      setChecked(checked.filter(checkId => checkId !== id));
+    if (checked.find((checkId) => checkId === id)) {
+      setChecked(checked.filter((checkId) => checkId !== id));
     } else {
       setChecked([...checked, id]);
     }
-  }
+  };
 
   const clearAllChecked = () => {
     setChecked([]);
-  }
+  };
 
   return (
     <AppContext.Provider
@@ -63,7 +75,9 @@ export const AppContextWrapper: React.FC = ({ children }) => {
         setCheckedFn,
         clearAllChecked,
         bachgroundCover,
-        setBackgroundCover
+        setBackgroundCover,
+        userInfo,
+        setUserInfo,
       }}
     >
       {children}

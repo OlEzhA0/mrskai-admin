@@ -1,3 +1,5 @@
+@import "../../../styles/vars.scss";
+
 .ProdSett {
   margin: 40px 0;
   display: flex;
@@ -12,9 +14,9 @@
   &__AddProd {
     display: flex;
     align-items: center;
-    color: #3886f3;
-    font-size: 15px;
-    font-family: "Roboto", serif;
+    color: $color-primary;
+    font-size: $fz_15;
+    font-family: $Roboto-ff;
   }
 
   &__CheckedParam {
@@ -22,8 +24,8 @@
   }
 
   &__Param {
-    font-size: 15px;
-    color: #a6a6a6;
+    font-size: $fz_15;
+    color: $color-text-light;
     
     display: flex;
     align-items: center;
@@ -31,14 +33,14 @@
     cursor: pointer;
     padding: 5px;
     transition: all 0.3s;
-    border-radius: 10px;
+    border-radius: $border-radius-default;
 
     &:hover {
-      background-color: #ebebeb;
+      background-color: $color-sys-gray;
     }
 
     &--delete {
-      color: #FF4D42;
+      color: $color-error;
       opacity: 0.6;
 
       &:hover {

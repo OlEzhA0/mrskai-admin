@@ -1,3 +1,5 @@
+@import "../../../styles/vars.scss";
+
 .ProductCard {
   height: 50px;
   display: flex;
@@ -18,13 +20,13 @@
     content: "";
     width: 100%;
     height: 1px;
-    background-color: #ebebeb;
+    background-color: $color-sys-gray;
     left: 0;
     bottom: 0;
   }
 
   &:hover::after {
-    background-color: #3886f3;
+    background-color: $color-primary;
   }
 
   &__Checkbox {
@@ -34,13 +36,21 @@
   &__LeftSide {
     display: flex;
     align-items: center;
+    flex-grow: 1;
+  }
+
+  &__LeftSideInfo {
+    margin-left: 24px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-grow: 1;
   }
 
   &__Photo {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-left: 24px;
     object-fit: cover;
     object-position: center;
     transition: all 0.3s;
@@ -52,21 +62,21 @@
 
   &__Title {
     transition: all 0.2s;
-    color: #1d1d1d;
-    font-size: 15px;
+    color: $color-text;
+    font-size: $fz_15;
     font-weight: bold;
   }
 
   &__Type {
-    font-size: 13px;
-    color: #a6a6a6;
+    font-size: $fz_13;
+    color: $color-text-light;
   }
 
   &__Prices {
     display: flex;
     flex-direction: column;
-    color: #a6a6a6;
-    font-size: 13px;
+    color: $color-text-light;
+    font-size: $fz_13;
     text-align: center;
     margin-right: 10px;
   }
@@ -96,7 +106,7 @@
     transition: all 0.3s;
     position: relative;
     &:hover {
-      background-color: #ebebeb;
+      background-color: $color-sys-gray;
       border-radius: 4px;
     }
 
@@ -126,5 +136,5 @@
 }
 
 .ProductCard:hover .ProductCard__Title {
-  color: #3886f3;
+  color: $color-primary;
 }

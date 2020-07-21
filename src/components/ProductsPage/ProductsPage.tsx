@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo } from "react";
 import { useMutation, useSubscription } from "react-apollo";
 import { useHistory, useLocation } from "react-router-dom";
-import { AppContext } from "../../appContext";
+import { AppContext } from "../../context/appContext";
 import { addProductMutation, deleteProductMutation } from "../../mutation";
 import "./ProductsPage.scss";
 import { productsQuery } from "./query";
@@ -15,7 +15,6 @@ export const ProductsPage = () => {
   const { data, loading } = useSubscription(productsQuery);
   const { checked, clearAllChecked } = useContext(AppContext);
   const [addCloneProducts] = useMutation(addProductMutation);
-  const [deleteChekedProducts] = useMutation(deleteProductMutation);
 
   const products: Products[] = useMemo(() => {
     if (data && data.products) {
@@ -29,6 +28,22 @@ export const ProductsPage = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const sortByParam = useMemo(() => searchParams.get(sortBy), [searchParams]);
+
+  const cloneObject = (clone: Products, newTitle: string) => ({
+    title: newTitle,
+    descr: clone.descr,
+    color: clone.color,
+    price: clone.price,
+    modelParam: clone.modelParam,
+    composition: clone.composition,
+    sizes: clone.sizes,
+    lastPrice: clone.lastPrice,
+    type: clone.type,
+    photos: [],
+    care: clone.care,
+    previewPhoto: "",
+    timestamp: clone.timestamp,
+  });
 
   const cloneChecked = () => {
     if (!checked.length) {
@@ -46,20 +61,7 @@ export const ProductsPage = () => {
       }
 
       await addCloneProducts({
-        variables: {
-          title: newTitle,
-          descr: clone.descr,
-          color: clone.color,
-          price: clone.price,
-          modelParam: clone.modelParam,
-          composition: clone.composition,
-          sizes: clone.sizes,
-          lastPrice: clone.lastPrice,
-          type: clone.type,
-          photos: [],
-          care: clone.care,
-          previewPhoto: "",
-        },
+        variables: cloneObject(clone, newTitle),
         refetchQueries: [
           {
             query: productsQuery,
@@ -80,20 +82,7 @@ export const ProductsPage = () => {
       }
 
       await addCloneProducts({
-        variables: {
-          title: newTitle,
-          descr: clone.descr,
-          color: clone.color,
-          price: clone.price,
-          modelParam: clone.modelParam,
-          composition: clone.composition,
-          sizes: clone.sizes,
-          lastPrice: clone.lastPrice,
-          type: clone.type,
-          photos: [],
-          care: clone.care,
-          previewPhoto: "",
-        },
+        variables: cloneObject(clone, newTitle),
         refetchQueries: [
           {
             query: productsQuery,
@@ -113,23 +102,14 @@ export const ProductsPage = () => {
     }
   }, [searchParams]);
 
-  const deleteChecked = () => {
-    checked.forEach(async (check) => {
-      await deleteChekedProducts({
-        variables: { id: check },
-        refetchQueries: [{ query: productsQuery }],
-      });
-    });
-
-    clearAllChecked();
-  };
-
   const filteredProducts = useMemo(() => {
     if (sortByParam === defaultSortBy) {
-      return products;
+      return [...products].sort((a, b) => +b.timestamp - +a.timestamp);
     }
 
-    return products.filter((product) => product.type === sortByParam);
+    return products
+      .filter((product) => product.type === sortByParam)
+      .sort((a, b) => +b.timestamp - +a.timestamp);
   }, [sortByParam, products]);
 
   return (
@@ -140,7 +120,6 @@ export const ProductsPage = () => {
           sortBy={sortBy}
           productsPerPage={productsPerPage}
           cloneChecked={cloneChecked}
-          deleteChecked={deleteChecked}
         />
         {loading && (
           <div className="Spinner">

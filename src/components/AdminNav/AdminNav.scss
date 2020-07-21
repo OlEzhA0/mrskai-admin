@@ -1,7 +1,9 @@
+@import "../../styles/vars.scss";
+
 .AdminNav {
   &__Name {
     margin-left: 12px;
-    font-size: 15px;
-    color: #1d1d1d;
+    font-size: $fz_15;
+    color: $color-text;
   }
 }

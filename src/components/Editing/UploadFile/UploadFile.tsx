@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./UploadFile.scss";
-import { getPhotos, postData, deletePhotoS3 } from "../../../helpers";
+import {
+  getPhotos,
+  postData,
+  deletePhotoS3,
+  loadPhotos,
+  checkPhotosFromServer,
+} from "../../../helpers";
 import cn from "classnames";
 import { SpinnerPhotoLoader } from "../../Spinners/SpinnerPhotoLoader";
+import { AppContext } from "../../../context/appContext";
 
 interface Props {
   photos: string[];
@@ -23,6 +30,7 @@ export const UploadFile: React.FC<Props> = ({
   previewError,
   setError,
 }) => {
+  const { userInfo } = useContext(AppContext);
   const [file, setFile] = useState<File | null>(null);
   const [disabledButton, setDisabledButton] = useState(false);
   const handleLoadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +43,7 @@ export const UploadFile: React.FC<Props> = ({
 
   const getData = () => {
     setPhotos([]);
-    getPhotos().then((photos) => {
+    getPhotos(userInfo.id).then((photos) => {
       setPhotos(photos);
     });
   };
@@ -45,17 +53,27 @@ export const UploadFile: React.FC<Props> = ({
     setDisabledButton(true);
     const formData = new FormData();
     formData.set("photo", file!);
-    postData(formData).then(
-      (res) => {
-        setValues("", name);
-        setError(true, name);
-        setPhotos([...res]);
-        setFile(null);
-        setDisabledButton(false);
-      },
-      (err) => {
-        setDisabledButton(false);
-        console.log(err);
+    checkPhotosFromServer(file?.name as string, userInfo.id).then(
+      (resMessage) => {
+        if (resMessage === "no yet") {
+          postData(formData).then(
+            (res) => {
+              setValues("", name);
+              setError(true, name);
+              setPhotos([...photos, res]);
+              setFile(null);
+              setDisabledButton(false);
+              loadPhotos([...photos, res], userInfo.id);
+            },
+            (err) => {
+              setDisabledButton(false);
+              console.log(err);
+            }
+          );
+        } else {
+          setFile(null);
+          setDisabledButton(false);
+        }
       }
     );
   };
@@ -74,7 +92,9 @@ export const UploadFile: React.FC<Props> = ({
     setDisabledButton(true);
     deletePreviewPhoto();
     setPhotos(photos.filter((photoToDel) => photoToDel !== photo));
-    await deletePhotoS3(photo).finally(() => setDisabledButton(false));
+    await deletePhotoS3(photo, userInfo.id).finally(() =>
+      setDisabledButton(false)
+    );
   };
 
   return (

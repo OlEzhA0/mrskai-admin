@@ -15,32 +15,47 @@ export async function postData(formData: any) {
   return json;
 }
 
-export const getPhotos = async () => {
-  const res = await fetch(`${RELOAD_URL}`);
+export const getPhotos = async (id: string) => {
+  const res = await fetch(`${RELOAD_URL}`, {
+    method: "POST",
+    body: id,
+  });
   const json = await res.json();
 
   return json;
 };
 
-export const deleteAllPhotosFromServer = async () => {
+export const deleteAllPhotosFromServer = async (id: string) => {
   await fetch(`${DELETE_ALL}`, {
     method: "POST",
+    body: id,
   });
 };
 
-export const deletePhotoS3 = async (photo: string) => {
+export const deletePhotoS3 = async (photo: string, id: string) => {
   const res = await fetch(`${process.env.REACT_APP_DELETE_PHOTOS3}`, {
     method: "POST",
-    body: photo,
+    body: JSON.stringify({ photo, id }),
   });
   const json = await res.json();
 
   return json;
 };
 
-export const loadPhotos = async (photos: string[]) => {
+export const loadPhotos = async (photos: string[], id: string) => {
   await fetch(`${process.env.REACT_APP_LOAD_PHOTOS}`, {
     method: "PUT",
-    body: photos.join("|"),
+    body: JSON.stringify({ photos: photos.join("|"), id }),
   });
+};
+
+export const checkPhotosFromServer = async (photo: string, id: string) => {
+  const res = await fetch(`http://localhost:5000/checkPhoto`, {
+    method: "POST",
+    body: JSON.stringify({ photo, id }),
+  });
+
+  const json = res.json();
+
+  return json;
 };

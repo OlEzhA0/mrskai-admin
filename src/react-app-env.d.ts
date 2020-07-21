@@ -20,6 +20,7 @@ interface Products {
   type: string;
   photos: string[];
   previewPhoto: string;
+  timestamp: string;
 }
 
 interface LocalProduct {
@@ -35,6 +36,7 @@ interface LocalProduct {
   type: string;
   photos: string[];
   previewPhoto: string;
+  timestamp: string;
 }
 
 interface ProductsPage {
@@ -86,4 +88,11 @@ interface ErrorsField {
   care: boolean;
   previewPhoto: boolean;
   [key: string]: boolean;
+}
+
+interface User {
+  id: string;
+  name: string;
+  rights: string;
+  type: string;
 }

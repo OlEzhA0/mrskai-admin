@@ -47,15 +47,14 @@ router.post(
     try {
       const { login, password } = req.body;
       const user = await User.findOne({ name: login });
-      console.log(user)
       if (!user) {
-        return res.status(400).json({ message: "Пользователь не найден" });
+        return res.status(400).json({ message: "Неверный логин или пароль" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(400).json({ message: "Неверный пароль" });
+        return res.status(400).json({ message: "Неверный логин или пароль" });
       }
 
       const token = jwt.sign(

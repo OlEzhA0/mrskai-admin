@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./PopupSuccessNew.scss";
 import { Link } from "react-router-dom";
-import { AppContext } from "../../../appContext";
+import { AppContext } from "../../../context/appContext";
 
 interface Props {
   addMore: () => void;

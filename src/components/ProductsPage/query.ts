@@ -16,6 +16,7 @@ export const productsQuery = gql`
       care
       photos
       previewPhoto
+      timestamp
     }
   }
 `;

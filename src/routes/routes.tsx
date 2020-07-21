@@ -1,11 +1,10 @@
 import React from "react";
-import { SideBar } from "./components/SideBar";
+import { SideBar } from "../components/SideBar";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { EditingContextWrapper } from "./EditingContext";
-import { ProductsPage } from "./components/ProductsPage";
-import { EditingPage } from "./components/EditingPage";
-import { LoginPage } from "./components/LoginPage";
-import { CreateUser } from "./components/CreateUser";
+import { EditingContextWrapper } from "../context/EditingContext";
+import { ProductsPage } from "../components/ProductsPage";
+import { EditingPage } from "../components/EditingPage";
+import { LoginPage } from "../components/LoginPage";
 
 export const useRoutes = (isAuth: boolean) =>
   isAuth ? (

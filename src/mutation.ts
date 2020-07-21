@@ -22,6 +22,7 @@ export const addProductMutation = gql`
     $photos: [String!]
     $previewPhoto: String!
     $care: String!
+    $timestamp: String!
   ) {
     addProduct(
       title: $title
@@ -36,6 +37,7 @@ export const addProductMutation = gql`
       photos: $photos
       previewPhoto: $previewPhoto
       care: $care
+      timestamp: $timestamp
     ) {
       id
       title
@@ -50,6 +52,7 @@ export const addProductMutation = gql`
       photos
       previewPhoto
       care
+      timestamp
     }
   }
 `;
@@ -69,6 +72,7 @@ export const updateProductMutation = gql`
     $photos: [String!]
     $previewPhoto: String!
     $care: String!
+    $timestamp: String!
   ) {
     updateProduct(
       id: $id
@@ -84,6 +88,7 @@ export const updateProductMutation = gql`
       photos: $photos
       previewPhoto: $previewPhoto
       care: $care
+      timestamp: $timestamp
     ) {
       id
       title
@@ -98,6 +103,7 @@ export const updateProductMutation = gql`
       photos
       previewPhoto
       care
+      timestamp
     }
   }
 `;

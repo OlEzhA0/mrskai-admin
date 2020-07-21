@@ -4,7 +4,7 @@ import App from "./App";
 import { HashRouter } from "react-router-dom";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import { AppContextWrapper } from "./appContext";
+import { AppContextWrapper } from "./context/appContext";
 
 const client = new ApolloClient({
   uri: `${process.env.REACT_APP_SERVER}/graphql`,

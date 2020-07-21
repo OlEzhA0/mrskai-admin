@@ -3,24 +3,27 @@ import "./ProductsPageSettings.scss";
 import { Link } from "react-router-dom";
 import { ProductsSelect } from "../ProductsSelect";
 import { typeOptions } from "../../../helpers";
-import { AppContext } from "../../../appContext";
+import { AppContext } from "../../../context/appContext";
 
 interface Props {
   sortBy: string;
   productsPerPage: string;
   cloneChecked: () => void;
-  deleteChecked: () => void;
 }
 
 export const ProductsPageSettings: React.FC<Props> = ({
   sortBy,
   productsPerPage,
   cloneChecked,
-  deleteChecked,
 }) => {
   const perPage = ["10", "20", "30", "Все"];
   const category = ["Все товары", ...typeOptions];
-  const { checked, clearAllChecked } = useContext(AppContext);
+  const {
+    checked,
+    clearAllChecked,
+    setBackgroundCover,
+    deletePopupOpen,
+  } = useContext(AppContext);
 
   return (
     <div className="ProductsPageSettings ProdSett">
@@ -38,7 +41,13 @@ export const ProductsPageSettings: React.FC<Props> = ({
               />{" "}
               Дублировать ({checked.length})
             </p>
-            <p className="ProdSett__Param ProdSett__Param--delete" onClick={deleteChecked}>
+            <p
+              className="ProdSett__Param ProdSett__Param--delete"
+              onClick={() => {
+                setBackgroundCover(true);
+                deletePopupOpen(true, '');
+              }}
+            >
               <img
                 src="images/products/deleteProd.svg"
                 alt="clone"
@@ -62,7 +71,7 @@ export const ProductsPageSettings: React.FC<Props> = ({
       </div>
       <div className="ProdSett__RightSide">
         <ProductsSelect
-          mainText="Отображать на странице:"
+          mainText="Отображать:"
           options={perPage}
           width={80}
           urlType={productsPerPage}
