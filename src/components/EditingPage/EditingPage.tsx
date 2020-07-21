@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-apollo";
 import { Redirect, useLocation } from "react-router-dom";
 import { AppContext } from "../../context/appContext";
-import { EditingContext } from "../../context/editingContext";
+import { EditingContext } from "../../editingContext";
 import {
   DEFAULT_FIELDS_ERRORS,
   DEFAULT_FIELDS_PARAMS,

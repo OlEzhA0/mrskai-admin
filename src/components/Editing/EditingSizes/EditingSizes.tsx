@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import "./EditingSizes.scss";
-import { EditingContext } from "../../../context/editingContext";
+import { EditingContext } from "../../../editingContext";
 import cn from "classnames";
 import { SIZES_CONFIG } from "../../../helpers";
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DEFAULT_FIELDS_ERRORS, DEFAULT_FIELDS_PARAMS } from "../helpers";
+import { DEFAULT_FIELDS_ERRORS, DEFAULT_FIELDS_PARAMS } from "./helpers";
 
 interface Context {
   fieldsParams: FieldsParams;
