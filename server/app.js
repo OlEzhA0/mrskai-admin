@@ -37,7 +37,7 @@ const getOrders = async () => {
   );
 
   const json = (await res.json()).rows;
-  console.log(json);
+
   return json.map(obj => ({
     articul: obj.code,
     stock: obj.stock,
