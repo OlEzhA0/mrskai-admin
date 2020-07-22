@@ -37,7 +37,7 @@ const getOrders = async () => {
   );
 
   const json = (await res.json()).rows;
-
+  console.log(json);
   return json.map(obj => ({
     articul: obj.code,
     stock: obj.stock,
@@ -98,7 +98,7 @@ setInterval(() => {
         }
       }).catch(e => console.log(e))
     });
-}, 120000)
+}, 300000)
 
 app.use((req, res, next) => {
   res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
